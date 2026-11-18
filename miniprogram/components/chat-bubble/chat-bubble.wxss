@@ -1,0 +1,12 @@
+.bubble-row { display: flex; align-items: flex-start; margin-bottom: 22rpx; }
+.bubble-row--cat > .bubble { margin-left: 14rpx; }
+.bubble-row--user > .bubble-avatar--user { margin-left: 14rpx; }
+.bubble-row--user { justify-content: flex-end; }
+.bubble-avatar { width: 62rpx; height: 62rpx; border-radius: 22rpx; background: var(--color-yellow); display: flex; justify-content: center; align-items: center; font-size: 34rpx; flex-shrink: 0; }
+.bubble-avatar--user { background: var(--color-lavender); color: var(--color-title); font-size: 23rpx; }
+.bubble { max-width: 76%; position: relative; padding: 18rpx 22rpx; border-radius: 8rpx 26rpx 26rpx 26rpx; background: #fff; color: var(--color-text); box-shadow: 0 8rpx 20rpx rgba(164, 104, 137, .08); font-size: 26rpx; line-height: 1.55; }
+.bubble-row--user .bubble { border-radius: 26rpx 8rpx 26rpx 26rpx; background: var(--color-primary); color: #fff; }
+.bubble-time { display: block; font-size: 18rpx; margin-top: 8rpx; color: var(--color-muted); opacity: .8; }
+.bubble-row--user .bubble-time { color: #fff; }
+.bubble--care { background: #FFF8D9; border: 1rpx solid #F7DF9E; }
+.bubble-care-label { display: block; color: #B98D36; font-size: 20rpx; margin-bottom: 6rpx; }

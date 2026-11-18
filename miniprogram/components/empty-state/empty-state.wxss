@@ -1,0 +1,3 @@
+.empty-state { padding: 80rpx 28rpx; text-align: center; color: var(--color-muted); }
+.empty-state__icon { display: block; font-size: 72rpx; margin-bottom: 18rpx; }
+.empty-state__button { display: inline-block; margin-top: 28rpx; background: var(--color-lavender); color: var(--color-title); border-radius: 999rpx; font-size: 25rpx; padding: 14rpx 26rpx; }

@@ -1,0 +1,41 @@
+{
+  "pages": [
+    "pages/chat/chat",
+    "pages/recipe/recipe",
+    "pages/album/album",
+    "pages/profile/profile",
+    "pages/recipe-detail/recipe-detail",
+    "pages/recipe-add/recipe-add",
+    "pages/album-upload/album-upload",
+    "pages/profile-edit/profile-edit",
+    "pages/bind/bind",
+    "pages/settings/settings",
+    "pages/about/about",
+    "pages/privacy/privacy",
+    "pages/feedback/feedback"
+  ],
+  "window": {
+    "navigationBarTitleText": "八条与你",
+    "navigationBarBackgroundColor": "#FFF5F5",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#FFF5F5",
+    "backgroundTextStyle": "light",
+    "enablePullDownRefresh": false,
+    "onReachBottomDistance": 80
+  },
+  "tabBar": {
+    "color": "#9A829D",
+    "selectedColor": "#E86F91",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/chat/chat", "text": "八条", "iconPath": "assets/tabbar/cat.png", "selectedIconPath": "assets/tabbar/cat-active.png" },
+      { "pagePath": "pages/recipe/recipe", "text": "菜谱", "iconPath": "assets/tabbar/recipe.png", "selectedIconPath": "assets/tabbar/recipe-active.png" },
+      { "pagePath": "pages/album/album", "text": "相册", "iconPath": "assets/tabbar/album.png", "selectedIconPath": "assets/tabbar/album-active.png" },
+      { "pagePath": "pages/profile/profile", "text": "我的", "iconPath": "assets/tabbar/profile.png", "selectedIconPath": "assets/tabbar/profile-active.png" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

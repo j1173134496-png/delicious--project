@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "八条与你",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "cat-display": "/components/cat-display/cat-display",
+    "chat-bubble": "/components/chat-bubble/chat-bubble",
+    "loading": "/components/loading/loading"
+  }
+}

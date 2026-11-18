@@ -1,0 +1,4 @@
+{
+  "navigationBarTitleText": "情侣绑定",
+  "usingComponents": { "nav-bar": "/components/nav-bar/nav-bar", "avatar": "/components/avatar/avatar" }
+}

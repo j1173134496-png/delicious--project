@@ -1,0 +1,26 @@
+.bind-page { padding-top: 12rpx; }
+.bind-hero { display: flex; flex-direction: column; align-items: center; padding: 24rpx 0 30rpx; }
+.bind-hero__emoji { font-size: 82rpx; animation: floaty 2.5s ease-in-out infinite; }
+.bind-hero__title { font-size: 38rpx; font-weight: 700; color: var(--color-title); margin-top: 12rpx; }
+.bind-hero__desc { color: var(--color-muted); font-size: 22rpx; margin-top: 10rpx; text-align: center; }
+.invite-card, .input-card, .partner-card { padding: 28rpx; }
+.card-label { color: var(--color-muted); font-size: 23rpx; }
+.code-row { display: flex; align-items: center; justify-content: center; margin: 22rpx 0; }
+.code-row > button { margin-left: 18rpx; }
+.invite-code { letter-spacing: 12rpx; color: var(--color-primary-dark); font-size: 52rpx; font-weight: 700; padding-left: 12rpx; }
+.regenerate { display: block; margin: 0 auto; font-size: 23rpx; }
+.share-button { display: block; width: 72%; margin: 0 auto 16rpx; font-size: 25rpx; }
+.bind-divider { display: flex; justify-content: center; align-items: center; color: var(--color-muted); margin: 24rpx 0; }
+.bind-divider::before, .bind-divider::after { content: ''; width: 35%; height: 1rpx; background: #EFDDE8; margin: 0 20rpx; }
+.code-input { margin: 20rpx 0; background: #FFF8FB; border-radius: 16rpx; text-align: center; letter-spacing: 10rpx; padding: 22rpx; font-size: 34rpx; color: var(--color-title); }
+.input-card .primary-button { width: 100%; font-size: 27rpx; }
+.hint { display: block; margin-top: 20rpx; color: var(--color-muted); font-size: 21rpx; text-align: center; }
+.copy-hint { margin-top: 0; }
+.hint--error { color: var(--color-danger); }
+.partner-card { margin-top: 24rpx; display: flex; align-items: center; }
+.partner-card > view, .partner-card > button { margin-left: 18rpx; }
+.partner-card view:nth-child(2) { flex: 1; display: flex; flex-direction: column; }
+.partner-card view:nth-child(2) text + text { margin-top: 8rpx; }
+.partner-name { color: var(--color-title); font-weight: 700; }
+.partner-date { color: var(--color-muted); font-size: 22rpx; }
+.unlink { font-size: 22rpx; color: var(--color-danger); }

@@ -1,0 +1,16 @@
+page {
+  --color-primary: #FF9FB2;
+  --color-primary-dark: #E86F91;
+  --color-bg: #FFF5F5;
+  --color-card: #FFFFFF;
+  --color-lavender: #E8D5F5;
+  --color-yellow: #FFF3B0;
+  --color-mint: #B5EAD7;
+  --color-text: #5C445E;
+  --color-title: #4B3550;
+  --color-muted: #A58AA4;
+  --color-danger: #D85C70;
+  --shadow-card: 0 12rpx 32rpx rgba(164, 104, 137, .10);
+  --radius-lg: 30rpx;
+  --radius-md: 20rpx;
+}

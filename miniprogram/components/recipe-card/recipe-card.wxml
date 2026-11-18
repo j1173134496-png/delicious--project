@@ -1,0 +1,8 @@
+<view class="recipe-card card" aria-label="{{recipe.name}}，{{recipe.isUnlocked ? '已解锁' : '未解锁'}}，点击查看详情" data-id="{{recipe.recipeId}}" bindtap="onTap">
+  <view class="recipe-cover">
+    <image wx:if="{{hasImage}}" class="recipe-cover__image" src="{{imagePath}}" mode="aspectFill" binderror="onImageError" />
+    <view wx:else class="recipe-placeholder"><text class="recipe-placeholder__icon">{{recipe.isUnlocked ? '📷' : '🔒'}}</text><text class="recipe-placeholder__caption">{{recipe.isUnlocked ? '等待照片' : '待解锁'}}</text><text class="recipe-placeholder-label">{{recipe.isUnlocked ? '照片占位' : '锁定占位'}}</text></view>
+    <view class="lock-badge" wx:if="{{!recipe.isUnlocked}}">🔒<text class="lock-badge__text">未解锁</text></view>
+  </view>
+  <view class="recipe-copy"><text class="recipe-name">{{recipe.name}}</text><view class="recipe-meta"><text wx:if="{{recipe.isUnlocked}}" class="rating" aria-label="评分 {{recipe.rating || 0}} / 5">{{stars}}</text><text wx:else class="locked-text">还没吃过哦~</text></view><text class="recipe-status-text">{{recipe.isUnlocked ? '已解锁，点击查看评分和点赞' : '未解锁，补充照片解锁'}}</text><text class="recipe-date" wx:if="{{recipe.unlockedDate}}">{{recipe.unlockedDate}} 解锁</text></view>
+</view>

@@ -1,0 +1,6 @@
+<view class="nav-bar">
+  <view class="nav-bar__side" aria-label="返回上一页" bindtap="onBack" wx:if="{{showBack}}">‹</view>
+  <view class="nav-bar__side" aria-hidden="true" wx:else></view>
+  <text class="nav-bar__title" aria-label="{{title}}">{{title}}</text>
+  <view class="nav-bar__side" aria-hidden="true"><slot name="right"></slot></view>
+</view>

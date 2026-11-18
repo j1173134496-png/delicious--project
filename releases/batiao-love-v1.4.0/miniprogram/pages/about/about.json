@@ -1,0 +1,4 @@
+{
+  "navigationBarTitleText": "关于八条与你",
+  "usingComponents": { "nav-bar": "/components/nav-bar/nav-bar" }
+}

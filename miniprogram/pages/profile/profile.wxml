@@ -1,0 +1,55 @@
+<view class="safe-page profile-page">
+  <nav-bar title="我的" />
+  <view class="profile-hero card">
+    <avatar class="profile-hero__avatar" avatar="{{user.avatar}}" fallback="🐰" />
+    <view class="profile-hero__copy">
+      <text class="profile-name">{{user.nickname}}</text>
+      <text class="profile-signature">{{user.signature}}</text>
+    </view>
+    <button class="edit-link" bindtap="goEdit">编辑</button>
+  </view>
+
+  <view class="profile-info card">
+    <view class="info-row"><text>性别</text><text>{{genderLabel}}</text></view>
+    <view class="info-row"><text>生日</text><text>{{birthdayLabel}}</text></view>
+    <view class="info-row"><text>纪念日</text><text wx:if="{{isBound}}">{{anniversaryDate}} · {{anniversaryLabel}}</text><text wx:else>{{anniversaryLabel}}</text></view>
+  </view>
+
+  <view class="couple-card card">
+    <view class="section-head"><text class="section-title">我们的故事</text><text class="section-link" bindtap="goBind">{{isBound ? '查看绑定' : '邀请 Ta'}}</text></view>
+    <view class="couple-avatars">
+      <avatar size="small" avatar="{{user.avatar}}" fallback="🐰" />
+      <text class="couple-heart">♥</text>
+      <avatar size="small" avatar="{{isBound ? couple.partner.avatar : ''}}" fallback="{{isBound ? '🌷' : '？'}}" />
+    </view>
+    <text class="couple-status" wx:if="{{isBound}}">和 {{couple.partner.nickname}} 在一起的第 <text class="accent">{{togetherDays}}</text> 天</text>
+    <text class="couple-status muted" wx:else>绑定另一半，开启你们的共同记录</text>
+    <button class="primary-button couple-button" bindtap="goBind">{{isBound ? '管理情侣绑定' : '生成 / 输入邀请码'}}</button>
+    <button class="ghost-button profile-share-button" wx:if="{{!isBound}}" open-type="share">分享给 Ta</button>
+    <text class="hint capability-hint" wx:if="{{!capabilities.share}}">当前环境不支持分享，可进入绑定页复制邀请码。</text>
+  </view>
+
+  <view class="stats-card card">
+    <view class="section-head"><text class="section-title">八条成长</text><text class="level-chip">Lv.{{cat.level}} · {{formName}}</text></view>
+    <view class="cat-summary"><view class="cat-summary-visual"><image wx:if="{{formImage && !formImageFailed}}" class="cat-summary-image" src="{{formImage}}" mode="aspectFit" aria-label="当前形态：{{formName}}，状态：{{stateText}}" binderror="onFormImageError" /><text wx:else class="cat-emoji" aria-label="当前形态：{{formName}}，状态：{{stateText}}">{{formEmoji}}</text></view><view class="cat-summary__copy"><text>经验进度 {{progress.experience.current}}/{{progress.experience.need}}（{{progress.experience.percent}}%）</text><view class="progress-track"><view class="progress-value" style="width: {{progress.experience.percent}}%;"></view></view></view></view>
+    <text class="cat-state {{formStateClass}}" aria-live="polite">当前状态：{{stateText}}</text>
+    <text class="cat-state-note cat-transition-tip" wx:if="{{formTransitionTip}}" aria-live="polite">{{formTransitionTip}}</text>
+    <text class="cat-state-note">点击或长按猫咪可摸摸。</text>
+    <text class="cat-state-note" wx:if="{{formAssetFallback === 'idle'}}">当前状态没有专用图片，使用 idle 素材和轻量动效。</text>
+    <text class="cat-state-note" wx:if="{{formImageFailed}}">图片加载失败，显示 Emoji 占位。</text>
+    <view class="stat-grid stat-grid--wide">
+      <view><text class="stat-number">{{cat.feedCount}}</text><text class="stat-label">累计喂养</text></view>
+      <view><text class="stat-number">{{cat.chatCount}}</text><text class="stat-label">聊天次数</text></view>
+      <view><text class="stat-number">{{cat.mood}}</text><text class="stat-label">心情值</text></view>
+      <view><text class="stat-number">{{cat.hunger}}</text><text class="stat-label">饱食度</text></view>
+      <view><text class="stat-number">{{cat.todayFeedCount}}/3</text><text class="stat-label">今日喂养</text></view>
+    </view>
+    <view class="growth-next" wx:if="{{progress.complete}}"><text class="growth-complete">✨ 已完成全部形态</text></view>
+    <view class="growth-next" wx:else><text class="next-title">下一形态：{{progress.nextFormEmoji}} {{progress.nextFormName}}</text><view wx:for="{{conditionRows}}" wx:key="key" class="condition-row"><text>{{item.label}}</text><text>{{item.targetText}}</text><text class="condition-remaining {{item.ready ? 'condition-ready' : ''}}">{{item.remainingText}}</text></view></view>
+  </view>
+
+  <view class="menu-card card">
+    <view class="menu-row" bindtap="goSettings"><text class="menu-icon">⚙️</text><text>设置与隐私</text><text class="menu-arrow">›</text></view>
+    <view class="menu-row" bindtap="showAbout"><text class="menu-icon">💌</text><text>关于八条与你</text><text class="menu-arrow">›</text></view>
+  </view>
+</view>

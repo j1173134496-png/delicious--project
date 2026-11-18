@@ -1,0 +1,7 @@
+<view class="safe-page recipe-page">
+  <view class="recipe-header"><view><text class="page-title">菜谱图鉴</text><text class="page-subtitle">把一起吃过的美味收藏起来</text></view><text class="recipe-total">已解锁 {{unlockedCount}} 道</text></view>
+  <view class="recipe-tabs card"><view wx:for="{{tabs}}" wx:key="key" class="recipe-tab {{activeTab === item.key ? 'recipe-tab--active' : ''}}" data-tab="{{item.key}}" aria-label="{{item.label}}，{{item.count}} 道，{{activeTab === item.key ? '当前选中' : '切换'}}" bindtap="switchTab"><text>{{item.label}}</text><text class="recipe-tab-count">{{item.count}} 道</text><text class="recipe-tab-state">{{activeTab === item.key ? '当前分类' : '查看'}}</text></view></view>
+  <view class="recipe-grid" wx:if="{{recipes.length}}"><recipe-card wx:for="{{recipes}}" wx:key="recipeId" recipe="{{item}}" bind:select="openDetail" /></view>
+  <empty-state wx:else icon="🍳" text="{{emptyText}}" actionText="{{emptyActionText}}" bind:action="goAdd" />
+  <button class="floating-add" aria-label="新增菜品" bindtap="goAdd">＋ 新增菜品</button>
+</view>

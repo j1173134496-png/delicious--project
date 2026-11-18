@@ -1,0 +1,6 @@
+<view class="photo-card" aria-label="照片，点击预览，长按可尝试保存到系统相册" bindtap="onTap" data-id="{{photo.photoId}}" bindlongpress="onLongPress">
+  <image wx:if="{{hasImage}}" class="photo-card__image" src="{{imagePath}}" mode="aspectFill" binderror="onImageError" />
+  <view wx:else class="photo-placeholder"><text class="photo-placeholder__icon">📷</text><text class="photo-placeholder__caption">照片占位</text></view>
+  <view class="photo-tag" wx:if="{{photo.tags && photo.tags.length}}">#{{photo.tags[0]}}</view>
+  <view class="photo-uploader">{{photo.uploaderLabel || '本机记录'}}</view><text class="photo-action-hint">点击预览 · 长按尝试保存</text>
+</view>

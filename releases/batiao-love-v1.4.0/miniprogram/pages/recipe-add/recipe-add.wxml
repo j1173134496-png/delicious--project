@@ -1,0 +1,11 @@
+<view class="safe-page add-page">
+  <nav-bar title="{{isEdit ? '编辑菜品' : '添加新菜'}}" showBack="{{true}}" />
+  <view class="form-card card">
+    <view class="form-row"><text class="form-label">菜名</text><input class="form-input" maxlength="30" value="{{form.name}}" bindinput="onNameInput" placeholder="例如：周末一起做的炒饭" /></view>
+    <view class="form-row"><text class="form-label">分类</text><picker mode="selector" range="{{categoryOptions}}" value="{{categoryIndex}}" bindchange="onCategoryChange"><view class="picker-value">{{categoryOptions[categoryIndex]}} <text>⌄</text></view></picker></view>
+    <view class="form-column"><text class="form-label">给它打分</text><text class="rating-readable">当前评分 {{form.rating || 0}} / 5</text><view class="rating-picker"><text wx:for="{{ratingValues}}" wx:key="*this" data-rating="{{item}}" aria-label="评分 {{item}} / 5" bindtap="pickRating">{{item <= form.rating ? '♥' : '♡'}}</text></view></view>
+    <view class="form-column"><text class="form-label">评价 / 备注</text><textarea class="form-textarea" maxlength="300" value="{{form.review}}" bindinput="onReviewInput" placeholder="记下当时的味道和心情吧" /></view>
+  </view>
+  <view class="photo-picker card"><view class="photo-picker-head"><text class="form-label">照片</text><text class="photo-count">{{photos.length}} / 9（最多 9 张）</text></view><view class="photo-grid"><view wx:for="{{photoItems}}" wx:key="path" class="photo-item"><image wx:if="{{item.hasImage}}" src="{{item.imagePath}}" mode="aspectFill" binderror="onPhotoError" data-index="{{index}}" /><view wx:else class="photo-placeholder">📷<text>照片占位</text></view></view><view class="photo-add" aria-label="添加照片" bindtap="choosePhoto">＋ 添加照片</view></view><text class="photo-hint">可以先保存菜名，之后再补照片解锁。</text><text class="hint capability-hint" wx:if="{{!capabilities.chooseImage}}">当前环境不能选图，仍可先保存菜名和备注。</text></view>
+  <button class="primary-button save-button" loading="{{saving}}" disabled="{{saving}}" bindtap="save">保存菜品</button>
+</view>

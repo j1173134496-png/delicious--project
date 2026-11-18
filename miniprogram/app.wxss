@@ -1,0 +1,38 @@
+@import './styles/variables.wxss';
+@import './styles/mixins.wxss';
+@import './styles/animation.wxss';
+
+page {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+view, text, button, input, textarea, image, scroll-view {
+  box-sizing: border-box;
+}
+
+button::after { border: none; }
+button { margin: 0; padding: 0; line-height: 1.4; }
+input, textarea { font-family: inherit; }
+
+.safe-page {
+  min-height: 100vh;
+  padding: 28rpx 30rpx 150rpx;
+  padding-bottom: calc(150rpx + env(safe-area-inset-bottom));
+}
+
+.page-title { font-size: 44rpx; font-weight: 700; color: var(--color-title); }
+.page-subtitle { color: var(--color-muted); font-size: 24rpx; margin-top: 8rpx; }
+.card { background: var(--color-card); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
+.primary-button { background: var(--color-primary); color: #fff; border-radius: 999rpx; font-size: 28rpx; font-weight: 600; padding: 20rpx 30rpx; }
+.secondary-button { background: var(--color-lavender); color: var(--color-title); border-radius: 999rpx; font-size: 26rpx; padding: 18rpx 26rpx; }
+.ghost-button { color: var(--color-primary-dark); background: transparent; font-size: 26rpx; padding: 12rpx 20rpx; }
+.muted { color: var(--color-muted); }
+.empty-state { padding: 80rpx 30rpx; text-align: center; color: var(--color-muted); }
+.empty-state__icon { font-size: 72rpx; display: block; margin-bottom: 20rpx; }
+.row { display: flex; align-items: center; }
+.space-between { justify-content: space-between; }
+.divider { height: 1rpx; background: #F2E7ED; margin: 24rpx 0; }

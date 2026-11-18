@@ -1,0 +1,12 @@
+<view class="safe-page edit-page">
+  <nav-bar title="编辑资料" showBack="{{true}}" />
+  <view class="avatar-editor card" bindtap="pickAvatar"><avatar size="large" avatar="{{form.avatar}}" fallback="🐰" /><text class="avatar-hint">点击更换头像</text><text class="hint capability-hint" wx:if="{{!capabilities.chooseImage}}">当前环境不能选图，将使用 Emoji 头像。</text></view>
+  <view class="form-card card">
+    <view class="form-row"><text class="form-label">昵称</text><input class="form-input" maxlength="20" value="{{form.nickname}}" bindinput="onNicknameInput" placeholder="给自己取个名字" /></view>
+    <view class="form-row"><text class="form-label">性别</text><picker mode="selector" range="{{genderOptions}}" value="{{genderIndex}}" bindchange="onGenderChange"><view class="picker-value">{{genderOptions[genderIndex] || '未设置'}} <text>⌄</text></view></picker></view>
+    <view class="form-row"><text class="form-label">生日</text><picker mode="date" value="{{form.birthday}}" start="1900-01-01" end="{{today}}" bindchange="onBirthdayChange"><view class="picker-value">{{form.birthday || '选择生日'}} <text>⌄</text></view></picker></view>
+    <view class="form-row"><text class="form-label">在一起的日子</text><picker mode="date" value="{{form.anniversaryDate}}" start="2000-01-01" end="{{today}}" bindchange="onAnniversaryChange"><view class="picker-value">{{form.anniversaryDate}} <text>⌄</text></view></picker></view>
+    <view class="form-column"><text class="form-label">个性签名</text><textarea class="form-textarea" maxlength="60" value="{{form.signature}}" bindinput="onSignatureInput" placeholder="写一句属于你们的话" /></view>
+  </view>
+  <button class="primary-button save-button" loading="{{saving}}" disabled="{{saving || avatarSaving}}" bindtap="save">保存资料</button>
+</view>

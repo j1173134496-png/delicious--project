@@ -1,0 +1,22 @@
+# Operating system and editor files
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+node_modules/
+__pycache__/
+*.pyc
+
+# Local WeChat DevTools settings (regenerated on import)
+project.private.config.json
+
+# Local credentials
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+
+# Blender automatic backups; keep the editable .blend source
+*.blend[0-9]*

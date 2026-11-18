@@ -1,0 +1,18 @@
+{
+  "desc": "八条与你小程序站点地图",
+  "rules": [
+    { "action": "allow", "page": "pages/chat/chat" },
+    { "action": "allow", "page": "pages/recipe/recipe" },
+    { "action": "allow", "page": "pages/album/album" },
+    { "action": "allow", "page": "pages/profile/profile" },
+    { "action": "allow", "page": "pages/recipe-detail/recipe-detail" },
+    { "action": "allow", "page": "pages/recipe-add/recipe-add" },
+    { "action": "allow", "page": "pages/album-upload/album-upload" },
+    { "action": "allow", "page": "pages/profile-edit/profile-edit" },
+    { "action": "allow", "page": "pages/bind/bind" },
+    { "action": "allow", "page": "pages/settings/settings" },
+    { "action": "allow", "page": "pages/about/about" },
+    { "action": "allow", "page": "pages/privacy/privacy" },
+    { "action": "allow", "page": "pages/feedback/feedback" }
+  ]
+}

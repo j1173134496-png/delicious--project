@@ -1,0 +1,18 @@
+<view class="safe-page feedback-page">
+  <nav-bar title="意见反馈" showBack="{{true}}" />
+  <scroll-view class="feedback-scroll" scroll-y="true">
+    <view class="form-card card">
+      <text class="section-title">告诉我们你的想法</text>
+      <text class="section-hint">反馈只保存在本设备，提交后尚未发送到服务器。</text>
+      <text class="selected-category" aria-label="当前反馈分类">当前分类：{{selectedCategoryLabel}}</text>
+      <view class="category-list"><view wx:for="{{categories}}" wx:key="key" class="feedback-category {{item.selected ? 'feedback-category--active' : ''}}" aria-label="{{item.label}}{{item.selected ? '，已选择' : '，点击选择'}}" data-key="{{item.key}}" bindtap="selectCategory"><text>{{item.label}}</text><text class="category-state" wx:if="{{item.selected}}">已选</text></view></view>
+      <textarea class="feedback-textarea" aria-label="反馈内容，建议 5 到 500 个字" value="{{content}}" maxlength="500" bindinput="onContentInput" placeholder="建议写 5-500 个字" auto-height="true" />
+      <text class="field-hint">建议写 5–500 个字，当前 {{contentCount}} 字</text>
+      <input class="contact-input" aria-label="联系方式或备注，可选" value="{{contact}}" maxlength="60" bindinput="onContactInput" placeholder="联系方式或备注（可选）" />
+      <text class="hint capability-hint" wx:if="{{!capabilities.storage}}">当前环境本地存储能力不可用，请稍后重试。</text>
+      <button class="primary-button" aria-label="保存本地反馈" loading="{{submitting}}" disabled="{{submitting}}" bindtap="submit">保存反馈</button>
+    </view>
+    <view class="records-card card" wx:if="{{records.length}}"><text class="section-title">本设备最近记录</text><view wx:for="{{records}}" wx:key="feedbackId" class="feedback-record"><view class="record-copy"><text class="record-category">{{item.categoryLabel}}</text><text class="record-time">{{item.timeLabel}}</text><text class="record-content">{{item.content}}</text><text class="record-status">仅本地保存 · 尚未发送</text></view><button class="ghost-button" aria-label="复制这条本地反馈" data-id="{{item.feedbackId}}" bindtap="copyRecord" disabled="{{copyingId}}">复制</button></view></view>
+    <view class="empty-record card" wx:else><text>还没有本地反馈记录</text><text>写下第一条建议，保存后可以随时复制带走。</text></view>
+  </scroll-view>
+</view>

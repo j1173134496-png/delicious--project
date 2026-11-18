@@ -1,0 +1,4 @@
+{
+  "navigationBarTitleText": "菜品详情",
+  "usingComponents": { "nav-bar": "/components/nav-bar/nav-bar", "empty-state": "/components/empty-state/empty-state" }
+}

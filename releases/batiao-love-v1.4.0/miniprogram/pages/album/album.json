@@ -1,0 +1,4 @@
+{
+  "navigationBarTitleText": "我们的相册",
+  "usingComponents": { "photo-card": "/components/photo-card/photo-card", "empty-state": "/components/empty-state/empty-state", "avatar": "/components/avatar/avatar" }
+}

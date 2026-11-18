@@ -1,0 +1,1 @@
+<view class="loading"><text class="loading__dot">♡</text><text class="loading__text">{{text}}</text></view>

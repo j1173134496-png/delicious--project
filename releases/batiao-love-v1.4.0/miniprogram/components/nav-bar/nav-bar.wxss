@@ -1,0 +1,3 @@
+.nav-bar { height: 88rpx; display: flex; align-items: center; justify-content: space-between; color: var(--color-title); }
+.nav-bar__title { flex: 1; text-align: center; font-size: 34rpx; font-weight: 700; }
+.nav-bar__side { width: 90rpx; min-height: 48rpx; display: flex; align-items: center; justify-content: center; font-size: 48rpx; color: var(--color-primary-dark); }

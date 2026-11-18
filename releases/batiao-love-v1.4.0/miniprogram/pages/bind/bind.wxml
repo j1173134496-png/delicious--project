@@ -1,0 +1,14 @@
+<view class="safe-page bind-page">
+  <nav-bar title="情侣绑定" showBack="{{true}}" />
+  <view class="bind-hero"><text class="bind-hero__emoji" aria-label="爱心">💞</text><text class="bind-hero__title">把你们连在一起</text><text class="bind-hero__desc">当前设备模拟，不会自动绑定或跨设备同步；请确认邀请码后再操作。</text></view>
+  <view class="invite-card card">
+    <text class="card-label">我的邀请码</text>
+    <view class="code-row" aria-label="当前设备的邀请码"><text class="invite-code">{{inviteCode || '------'}}</text><button class="ghost-button" aria-label="复制邀请码" bindtap="copyCode" disabled="{{copying}}">复制</button></view>
+    <text class="hint copy-hint">剪贴板不可用时，请手动记录这 6 位邀请码。</text><text class="hint" wx:if="{{copyHint}}">{{copyHint}}</text>
+    <button class="primary-button share-button" aria-label="尝试分享邀请码" open-type="share" disabled="{{binding || unbinding || !capabilities.share}}">尝试分享给 Ta</button><text class="hint" wx:if="{{!capabilities.share}}">{{'当前环境不支持分享，请复制或手动记录邀请码'}}</text>
+    <button class="secondary-button regenerate" loading="{{copying}}" disabled="{{binding || unbinding || copying}}" bindtap="generateCode">生成新邀请码</button>
+  </view>
+  <view class="bind-divider"><text>或</text></view>
+  <view class="input-card card"><text class="card-label">输入 Ta 的邀请码</text><input class="code-input" aria-label="输入 6 位邀请码" maxlength="6" value="{{inputCode}}" bindinput="onInput" placeholder="6 位字母或数字" auto-capitalize="characters" /><text class="hint">邀请码只会在点击“确认绑定”后提交。</text><button class="primary-button" aria-label="确认绑定邀请码" loading="{{binding}}" disabled="{{binding || unbinding}}" bindtap="bind">确认绑定</button><text class="hint hint--error" wx:if="{{inviteHint}}">{{inviteHint}}</text><text class="hint">绑定后可以一起记录相册、菜谱和八条的成长。</text></view>
+  <view class="partner-card card" wx:if="{{isBound}}"><avatar size="small" avatar="{{couple.partner.avatar}}" fallback="🌷" /><view><text class="partner-name">已绑定 {{couple.partner.nickname}}</text><text class="partner-date">在一起的第 {{togetherDays}} 天</text></view><button class="ghost-button unlink" aria-label="解除当前绑定" loading="{{unbinding}}" disabled="{{unbinding || binding}}" bindtap="unbind">解除绑定</button></view>
+</view>

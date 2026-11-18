@@ -1,0 +1,9 @@
+<view class="safe-page about-page">
+  <nav-bar title="关于八条与你" showBack="{{true}}" />
+  <scroll-view class="about-scroll" scroll-y="true">
+    <view class="intro-card card"><text class="intro-emoji">🐱💕</text><text class="page-title">把平凡日子过成小幸福</text><text class="page-subtitle">八条与你是一款为情侣记录陪伴、聊天、菜谱和照片的小程序。</text></view>
+    <view class="content-card card"><text class="section-title">四个小模块</text><text class="body-text">八条：和一只会成长的猫咪聊天、喂食和互动。</text><text class="body-text">菜谱：把一起吃过的菜做成属于你们的图鉴。</text><text class="body-text">相册：按月份收集照片、日期和共同签名。</text><text class="body-text">我的：管理资料、绑定状态、成长数据和本地设置。</text></view>
+    <view class="content-card card"><text class="section-title">当前模式</text><text class="body-text">当前版本为 v{{version}}，{{localModeName}}。猫咪回复使用 mock 内容，资料、聊天、菜谱、反馈和照片元数据保存在当前设备。</text><text class="body-text">{{localModeCopy}}</text><text class="body-text">{{unavailableCapabilitiesCopy}}</text></view>
+    <text class="action-hint">反馈会保存在当前设备，提交后尚未发送到服务器。</text><button class="primary-button" aria-label="打开意见反馈" bindtap="goFeedback">去写一条反馈</button>
+  </scroll-view>
+</view>

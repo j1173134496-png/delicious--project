@@ -1,0 +1,28 @@
+.detail-page { padding-top: 12rpx; }
+.photo-swiper, .photo-swiper image, .detail-placeholder { width: 100%; height: 440rpx; border-radius: 30rpx; overflow: hidden; }
+.detail-placeholder { display: flex; align-items: center; justify-content: center; background: linear-gradient(145deg, #F6EFF5, #FFF7E8); font-size: 96rpx; }
+.detail-placeholder text { margin-left: 10rpx; color: var(--color-muted); font-size: 22rpx; }
+.photo-empty { min-height: 360rpx; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--color-muted); font-size: 23rpx; }
+.photo-empty > text + text, .photo-empty > button { margin-top: 16rpx; }
+.photo-empty > text:first-child { font-size: 88rpx; }
+.photo-empty button { margin-top: 12rpx; font-size: 24rpx; }
+.lock-hint { color: var(--color-primary-dark); font-size: 22rpx; }
+.detail-card { margin-top: 24rpx; padding: 28rpx; }
+.detail-title-row { display: flex; justify-content: space-between; align-items: flex-start; }
+.detail-name { display: block; font-size: 38rpx; font-weight: 700; color: var(--color-title); }
+.detail-category { display: block; margin-top: 9rpx; color: var(--color-muted); font-size: 22rpx; }
+.edit-button { color: var(--color-primary-dark); background: #FFF2F5; font-size: 23rpx; padding: 10rpx 20rpx; border-radius: 999rpx; }
+.lock-state { display: flex; flex-direction: column; margin-top: 24rpx; padding: 18rpx; border-radius: 18rpx; background: #FFF7E8; }
+.lock-badge { color: var(--color-title); font-size: 25rpx; font-weight: 700; }
+.lock-state .lock-hint { margin-top: 8rpx; }
+.rating-row { display: flex; align-items: center; margin: 24rpx 0; }
+.rating-row > .heart-rating + .heart-rating, .rating-row > .rating-hint { margin-left: 8rpx; }
+.heart-rating { color: #EFA4B3; font-size: 42rpx; }
+.rating-hint { color: var(--color-muted); font-size: 22rpx; margin-left: 10rpx; }
+.review { display: block; background: #FFF9DF; border-radius: 18rpx; color: var(--color-title); padding: 18rpx; font-size: 25rpx; line-height: 1.6; }
+.date { display: block; color: var(--color-muted); margin-top: 20rpx; font-size: 22rpx; }
+.detail-actions { border-top: 1rpx solid #F5EDF2; display: flex; align-items: center; justify-content: space-between; margin-top: 24rpx; padding-top: 20rpx; }
+.locked-actions { color: var(--color-muted); font-size: 22rpx; }
+.like-button { color: var(--color-muted); background: transparent; font-size: 25rpx; }
+.like-button--active { color: var(--color-primary-dark); }
+.danger-link { color: var(--color-danger); background: transparent; font-size: 22rpx; }
