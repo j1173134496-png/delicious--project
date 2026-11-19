@@ -1,5 +1,5 @@
 <view class="bubble-row {{message.senderId === 'batiao' ? 'bubble-row--cat' : 'bubble-row--user'}}">
-  <view class="bubble-avatar" wx:if="{{message.senderId === 'batiao'}}">🐱</view>
+  <view class="bubble-avatar" wx:if="{{message.senderId === 'batiao'}}" aria-label="八条"><image wx:if="{{!avatarFailed}}" class="bubble-avatar-image" src="{{avatarPath}}" mode="aspectFit" binderror="onAvatarError" /><text wx:else>🐱</text></view>
   <view class="bubble {{message.type === 'emotion_care' ? 'bubble--care' : ''}}"><text class="bubble-care-label" wx:if="{{message.type === 'emotion_care'}}">八条的关怀提醒</text><text>{{message.content}}</text><text class="bubble-time">{{time}}</text></view>
   <view class="bubble-avatar bubble-avatar--user" wx:if="{{message.senderId !== 'batiao'}}">你</view>
 </view>

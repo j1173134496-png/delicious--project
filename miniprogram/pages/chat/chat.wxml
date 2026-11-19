@@ -1,14 +1,55 @@
-<view class="safe-page chat-page">
-  <view class="chat-title-row"><view><text class="page-title">八条</text><text class="page-subtitle">今天也要被好好陪伴喵~</text></view><view class="level-badge">Lv.{{cat.level}} {{progress.formName}}</view></view>
-  <view wx:if="{{initializationError}}" class="initialization-error"><text class="initialization-error__title">本地数据需要恢复</text><text class="initialization-error__body">{{initializationError}}（阶段：{{initializationStage}}）</text><button class="initialization-error__button" loading="{{retrying}}" disabled="{{retrying}}" bindtap="retryInitialization">重试</button></view>
-  <view class="cat-card card"><cat-display cat="{{cat}}" state="{{catState}}" bind:pet="onPet" /><view class="cat-accessibility-note"><text>点击或长按猫咪摸摸；同一次长按后的重复点击会被抑制。</text><text>状态专用图片缺少时显示 idle 素材和轻量动效；图片加载失败会显示 Emoji 占位。</text></view><view class="status-row"><view class="status-item"><text>饱食度</text><view class="mini-track"><view style="width: {{cat.hunger}}%;"></view></view><text>{{cat.hunger}}</text></view><view class="status-item"><text>心情</text><view class="mini-track mini-track--mood"><view style="width: {{cat.mood}}%;"></view></view><text>{{cat.mood}}</text></view><view class="status-item"><text>今日喂养</text><text class="feed-count">{{cat.todayFeedCount}}/3</text></view></view><view class="experience-bar"><view class="experience-bar__head"><text>经验进度</text><text>{{progress.experience.current}}/{{progress.experience.need}}</text></view><view class="experience-track"><view class="experience-value" style="width: {{progress.experience.percent}}%;"></view></view></view><view class="cat-actions"><button class="secondary-button" disabled="{{feeding}}" bindtap="feed">🍙 喂八条</button><button class="ghost-button" disabled="{{petting}}" bindtap="onPet">♡ 摸摸</button></view></view>
-  <view class="care-tip" wx:if="{{careTip}}">{{careTip}}</view>
-  <view class="upgrade-tip" wx:if="{{upgradeTip}}">✨ {{upgradeTip}}</view>
-  <scroll-view class="message-scroll" scroll-y="true" scroll-into-view="{{scrollIntoView}}" enhanced="true" show-scrollbar="false">
-    <view wx:if="{{!messages.length}}" class="chat-empty"><text>🌷</text><text>和八条说说今天吧</text></view>
-    <view wx:for="{{messages}}" wx:key="messageId" id="msg-{{item.messageId}}"><chat-bubble message="{{item}}" /></view>
-    <view id="chat-bottom" class="chat-bottom"></view>
-  </scroll-view>
-  <view class="input-bar"><input class="chat-input" value="{{inputValue}}" maxlength="500" confirm-type="send" bindinput="onInput" bindconfirm="send" placeholder="和八条说点什么…" /><button class="send-button" loading="{{sending}}" disabled="{{sending}}" bindtap="send">发送</button></view>
-  <view class="heart-layer"><text wx:for="{{hearts}}" wx:key="*this" class="heart" style="left: {{item.left}}%; animation-delay: {{item.delay}}ms;">♥</text></view>
+<view class="journal-page chat-page">
+  <view class="room-shell {{keyboardHeight > 0 ? 'room-shell--keyboard' : ''}}">
+    <view wx:if="{{initializationError}}" class="initialization-error" aria-live="polite">
+      <text class="journal-title">本地数据需要恢复</text>
+      <text class="journal-hint">{{initializationError}}（阶段：{{initializationStage}}）</text>
+      <button class="secondary-button journal-compact" loading="{{retrying}}" disabled="{{retrying}}" bindtap="retryInitialization">重试</button>
+    </view>
+    <view class="cat-room" wx:else>
+      <image class="room-illustration" src="/assets/batiao-room/room.jpg" mode="scaleToFill" aria-hidden="true" />
+      <view class="room-heading">
+        <text class="room-title">{{cat.name || '八条'}}</text>
+        <text class="room-subtitle">今天也要被好好陪伴喵～</text>
+        <image class="name-paw" src="/assets/batiao-room/paw.png" mode="aspectFit" aria-hidden="true" />
+      </view>
+      <view class="level-badge">
+        <view class="level-cord" aria-hidden="true"></view>
+        <image class="level-sticker" src="/assets/batiao-room/level.png" mode="scaleToFill" aria-hidden="true" />
+        <text class="level-number">Lv.{{cat.level}}</text>
+        <text class="level-form">{{progress.formName}}</text>
+      </view>
+      <view class="room-meters">
+        <view class="meter-line"><image class="meter-icon" src="/assets/batiao-room/fish.png" mode="aspectFit" aria-hidden="true" /><text>饱食度</text><text class="meter-value">{{cat.hunger}}%</text></view>
+        <view class="meter-line"><image class="meter-icon" src="/assets/batiao-room/heart.png" mode="aspectFit" aria-hidden="true" /><text>快乐值</text><text class="meter-value">{{cat.mood}}%</text></view>
+        <view class="meter-line"><image class="meter-icon" src="/assets/batiao-room/rice.png" mode="aspectFit" aria-hidden="true" /><text>今日喂养</text><text class="meter-value">{{cat.todayFeedCount}}/3</text></view>
+      </view>
+      <view class="room-companion"><cat-display class="room-cat" cat="{{cat}}" state="{{catState}}" bind:pet="onPet" /></view>
+      <view class="cat-actions">
+        <button class="care-button care-button--feed {{feeding ? 'care-button--pressed' : ''}}" hover-class="care-button--pressed" disabled="{{feeding}}" bindtap="feed"><image class="care-icon" src="/assets/batiao-room/rice.png" mode="aspectFit" aria-hidden="true" /><text>喂八条</text></button>
+        <button class="care-button care-button--pet {{petting ? 'care-button--pressed' : ''}}" hover-class="care-button--pressed" disabled="{{petting}}" bindtap="onPet"><image class="care-icon" src="/assets/batiao-room/heart.png" mode="aspectFit" aria-hidden="true" /><text>摸摸它</text></button>
+      </view>
+      <view class="experience-bar">
+        <text>经验进度 {{progress.experience.current}}/{{progress.experience.need}}</text>
+        <view class="experience-track" aria-hidden="true">
+          <image class="experience-twig" src="/assets/batiao-room/twig.png" mode="scaleToFill" />
+          <view class="experience-fill" style="width: {{progress.experience.percent}}%;"></view>
+          <view class="experience-marker"><image class="experience-paw" src="/assets/batiao-room/paw.png" mode="aspectFit" /></view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="conversation">
+    <view class="conversation-heading"><text class="conversation-title">和小八条聊天中…</text></view>
+    <scroll-view class="message-scroll" scroll-y="true" scroll-into-view="{{scrollIntoView}}" enhanced="true" show-scrollbar="false">
+      <view wx:if="{{!messages.length}}" class="chat-empty">和八条说说今天吧</view>
+      <view wx:for="{{messages}}" wx:key="messageId" id="msg-{{item.messageId}}"><chat-bubble message="{{item}}" /></view>
+      <view id="chat-bottom" class="chat-bottom"></view>
+    </scroll-view>
+    <text class="conversation-tip" wx:if="{{upgradeTip || careTip}}" aria-live="polite">{{upgradeTip || careTip}}</text>
+    <view class="input-bar">
+      <view class="chat-input-frame"><input class="chat-input journal-field" aria-label="聊天消息" value="{{inputValue}}" maxlength="500" confirm-type="send" bindinput="onInput" bindconfirm="send" bindkeyboardheightchange="onKeyboardHeightChange" bindblur="onKeyboardBlur" placeholder="和八条说点什么…" placeholder-class="journal-placeholder" /></view>
+      <button class="journal-primary send-button" hover-class="journal-primary--pressed" loading="{{sending}}" disabled="{{sending || !!initializationError}}" bindtap="send">发送</button>
+    </view>
+  </view>
+  <view class="heart-layer" aria-hidden="true"><text wx:for="{{hearts}}" wx:key="*this" class="heart" style="left: {{item.left}}%; animation-delay: {{item.delay}}ms;">♥</text></view>
 </view>

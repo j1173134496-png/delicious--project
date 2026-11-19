@@ -1,13 +1,12 @@
-.edit-page { padding-top: 12rpx; }
-.avatar-editor { padding: 34rpx; display: flex; flex-direction: column; align-items: center; }
+.avatar-editor { padding: 26rpx; display: flex; flex-direction: column; align-items: center; }
 .avatar-editor .avatar-hint { margin-top: 14rpx; }
-.avatar-hint { color: var(--color-muted); font-size: 23rpx; }
-.form-card { margin-top: 24rpx; padding: 10rpx 28rpx; }
-.form-row { min-height: 98rpx; display: flex; align-items: center; border-bottom: 1rpx solid #F5EDF2; }
+.form-card { padding-top: 8rpx; padding-bottom: 8rpx; }
+.form-row { min-height: 90rpx; display: flex; align-items: center; justify-content: space-between; border-bottom: 2rpx dashed var(--journal-stitch); }
 .form-row > input, .form-row > picker { margin-left: 22rpx; }
 .form-column { padding: 22rpx 0; }
-.form-label { width: 180rpx; color: var(--color-title); font-size: 27rpx; }
+.form-label { flex: none; color: var(--color-title); font-weight: 700; font-size: 27rpx; }
 .form-input, .picker-value { flex: 1; color: var(--color-text); text-align: right; font-size: 27rpx; }
 .picker-value text { color: var(--color-muted); margin-left: 8rpx; }
-.form-textarea { margin-top: 18rpx; width: 100%; min-height: 150rpx; background: #FFF9FB; border-radius: 18rpx; padding: 18rpx; color: var(--color-text); font-size: 26rpx; }
-.save-button { width: 80%; margin: 40rpx auto 0; }
+.form-input { min-width: 0; height: 62rpx; padding: 0 14rpx; background: var(--journal-field); border: 2rpx solid var(--journal-stitch); border-radius: 999rpx; }
+.picker-value { display: inline-flex; padding: 9rpx 15rpx; background: var(--journal-honey); border-radius: 999rpx; }
+.form-textarea { margin-top: 13rpx; width: 100%; height: 120rpx; background: var(--journal-field); border: 2rpx solid var(--journal-stitch); border-radius: 18rpx; padding: 16rpx; color: var(--color-text); font-size: 26rpx; }

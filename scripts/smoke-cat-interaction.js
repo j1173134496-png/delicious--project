@@ -128,13 +128,58 @@ async function main() {
     const profileWxml = fs.readFileSync(path.join(ROOT, 'miniprogram/pages/profile/profile.wxml'), 'utf8')
     const catWxss = fs.readFileSync(path.join(ROOT, 'miniprogram/components/cat-display/cat-display.wxss'), 'utf8')
     const idleAsset = getFormAsset('baby', 'idle')
-    const fallbackAsset = getFormAsset('baby', 'happy')
+    const fallbackAsset = getFormAsset('genki', 'happy')
     check(idleAsset.hasDedicatedAsset && idleAsset.fallback === 'state', 'idle state uses the dedicated idle asset')
-    check(!fallbackAsset.hasDedicatedAsset && fallbackAsset.fallback === 'idle' && fallbackAsset.imagePath === idleAsset.imagePath && /idle 素材/.test(fallbackAsset.fallbackText), 'missing state asset falls back to the same-form idle asset with an explicit reason')
+    check(!fallbackAsset.hasDedicatedAsset && fallbackAsset.fallback === 'idle' && fallbackAsset.imagePath === getFormAsset('genki', 'idle').imagePath && /idle 素材/.test(fallbackAsset.fallbackText), 'missing state asset falls back to the same-form idle asset with an explicit reason')
+    for (const state of ['idle', 'happy', 'eating', 'sad', 'sleeping']) {
+      const asset = getFormAsset('baby', state)
+      check(asset.hasDedicatedAsset && asset.imagePath.endsWith(`/${state}.png`), `Lv.1 uses dedicated ${state} art`)
+    }
+    component.observers['cat.currentForm, cat.stateKey, state'].call(componentInstance, 'baby', 'happy', 'happy')
+    const happyImage = componentInstance.data.imagePath
+    const imageError = (src) => component.methods.onImageError.call(componentInstance, { currentTarget: { dataset: { src } } })
+    imageError(happyImage)
+    check(componentInstance.data.imagePath === idleAsset.imagePath && componentInstance.data.hasImage && componentInstance.data.stateText === '开心', 'failed state image falls back to the idle sprite without changing the state')
+    imageError(happyImage)
+    check(componentInstance.data.hasImage, 'stale image error does not remove the fallback image')
+    imageError(idleAsset.imagePath)
+    check(!componentInstance.data.hasImage && componentInstance.data.assetFallback === 'emoji', 'failed idle sprite falls back to an emoji')
+
+    // Keep canceled callbacks in the stub so they can be delivered out of order.
+    const originalNow = Date.now
+    let timestamp = new Date(2026, 10, 19, 14).getTime()
+    Date.now = () => timestamp
+    try {
+      resetStorage()
+      chat.onShow()
+      chat.feed()
+      const expiresAt = chat.data.cat.stateUntil
+      const staleFeedTimer = pending.at(-1)
+      check(chat.data.catState === 'eating' && expiresAt === timestamp + 1200, 'feeding renders the eating window')
+      chat.onHide()
+      timestamp += 200
+      chat.onShow()
+      const resumedFeedTimer = pending.at(-1)
+      staleFeedTimer()
+      check(pending.at(-1) === resumedFeedTimer && chat.data.catState === 'eating', 'returning resumes eating and ignores an old page callback')
+      timestamp = expiresAt
+      resumedFeedTimer()
+      check(chat.data.catState === 'idle' && chat.data.cat.todayFeedCount === 1, 'resumed eating expires at the original deadline without feeding again')
+      const dayTimer = pending.at(-1)
+      timestamp = new Date(2026, 10, 19, 22).getTime()
+      dayTimer()
+      check(chat.data.catState === 'sleeping', 'foreground at the night boundary resolves a sleeping sprite')
+      timestamp = new Date(2026, 10, 20, 7).getTime()
+      pending.at(-1)()
+      check(chat.data.catState === 'idle', 'morning refresh resolves the idle sprite')
+    } finally {
+      chat.onUnload()
+      Date.now = originalNow
+    }
     check(/bindtap="onPet"/.test(wxml) && /bindlongpress="onPet"/.test(wxml), 'cat display registers tap and longpress on one handler')
-    check(/当前状态/.test(wxml) && /点击或长按/.test(wxml) && /idle 素材/.test(wxml) && /Emoji 占位/.test(wxml), 'cat display exposes readable state, gesture and image fallback copy')
-    check(/点击或长按/.test(chatWxml) && /idle 素材/.test(chatWxml) && /Emoji 占位/.test(chatWxml), 'chat page repeats the cat interaction and fallback guidance')
-    check(/当前状态/.test(profileWxml) && /点击或长按/.test(profileWxml) && /idle 素材/.test(profileWxml), 'profile page exposes the current state and fallback guidance')
+    check(/当前状态/.test(wxml) && /点击或长按/.test(wxml) && /Emoji 占位/.test(wxml), 'cat display exposes readable state, gesture and image fallback copy')
+    check(/<cat-display[^>]+bind:pet="onPet"/.test(chatWxml) && /bindtap="onPet"/.test(chatWxml), 'chat keeps both the interactive cat and pet button')
+    check(/当前状态/.test(profileWxml) && /formImageFailed/.test(profileWxml) && /Emoji 占位/.test(profileWxml), 'profile exposes the state and reports actual image failures')
     check(/aria-label="当前形态：\{\{formName\}\}，状态：\{\{stateText\}\}"/.test(profileWxml), 'profile cat image and emoji fallback expose a readable state label')
     check(/progress\.experience\.percent/.test(chatWxml) && /progress\.experience\.current/.test(chatWxml), 'chat renders experience progress and numbers')
     check(/progress\.experience\.percent/.test(profileWxml) && /progress\.experience\.current/.test(profileWxml), 'profile renders the same experience progress')

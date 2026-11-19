@@ -33,8 +33,9 @@ async function main() {
   formKeys.forEach((form) => stateKeys.forEach((state) => {
     const asset = getFormAsset(form, state)
     check(asset.formKey === form && asset.stateKey === state, `asset matrix resolves ${form}/${state}`)
-    const expectedFallback = state === 'idle' ? 'state' : 'idle'
-    check(asset.imagePath === FORM_META[form].imagePath && asset.fallback === expectedFallback, `${state} asset resolves or falls back to idle for ${form}`)
+    const dedicated = form === 'baby' || state === 'idle'
+    const expectedPath = dedicated ? FORM_META[form].imagePath.replace(/idle\.png$/, `${state}.png`) : FORM_META[form].imagePath
+    check(asset.imagePath === expectedPath && asset.fallback === (dedicated ? 'state' : 'idle'), `${state} asset resolves or falls back to idle for ${form}`)
     check(typeof asset.animationClass === 'string' && asset.animationClass.indexOf(`cat-display--${state}`) === 0, `state animation class resolves ${form}/${state}`)
   }))
   const unknownAsset = getFormAsset('missing-form', 'missing-state')
@@ -48,6 +49,8 @@ async function main() {
   const componentContext = { data: Object.assign({}, componentDefinition.data), setData(update) { this.data = Object.assign({}, this.data, update) } }
   componentDefinition.observers['cat.currentForm, cat.stateKey, state'].call(componentContext, 'baby', 'happy', 'happy')
   check(componentContext.data.stateClass === 'cat-display--happy' && componentContext.data.formName === FORM_META.baby.name, 'cat component shares form/state metadata')
+  componentDefinition.methods.onImageError.call(componentContext)
+  check(componentContext.data.hasImage && componentContext.data.imagePath === FORM_META.baby.imagePath, 'cat component tries the default sprite when a state image fails')
   componentDefinition.methods.onImageError.call(componentContext)
   check(!componentContext.data.hasImage && componentContext.data.assetFallback === 'emoji', 'cat component image error falls back to Emoji')
   componentDefinition.observers['cat.currentForm, cat.stateKey, state'].call(componentContext, 'baby', 'happy', 'happy')

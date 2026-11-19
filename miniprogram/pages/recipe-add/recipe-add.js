@@ -18,7 +18,14 @@ function presentPhotos(paths) {
 
 Page({
   data: { isEdit: false, form: { name: '', category: 'hunan', rating: 0, review: '' }, categoryOptions: ['湘菜', '甜品', '自定义'], categoryIndex: 0, ratingValues: [1, 2, 3, 4, 5], photos: [], photoItems: [], saving: false, choosingPhoto: false, capabilities: getCapabilities() },
-  onLoad(options) { this.setData({ capabilities: getCapabilities() }); this.recipeId = options.id || ''; this.load() },
+  onLoad(options = {}) {
+    this.setData({ capabilities: getCapabilities() })
+    this.recipeId = options.id || ''
+    this.load()
+    if (this.data.isEdit && typeof wx !== 'undefined' && typeof wx.setNavigationBarTitle === 'function') {
+      wx.setNavigationBarTitle({ title: '编辑菜品' })
+    }
+  },
   onShow() { task.activate(); this.setData({ saving: false, choosingPhoto: false }) },
   onHide() { task.cancel() },
   onUnload() { task.cancel() },

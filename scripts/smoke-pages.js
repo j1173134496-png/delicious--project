@@ -99,8 +99,9 @@ function hasTagNameSelector(wxss) {
 
 function makeWx(options) {
   const settings = options || {}
-  const state = { navigations: [], back: [], tabs: [], clipboard: [], toasts: [], modals: [], chooseImageCalls: 0, savedPhotos: [] }
+  const state = { navigations: [], titles: [], back: [], tabs: [], clipboard: [], toasts: [], modals: [], chooseImageCalls: 0, savedPhotos: [] }
   const wx = {
+    setNavigationBarTitle(payload) { state.titles.push(payload.title) },
     canIUse(api) { return settings.canIUse === undefined ? true : (typeof settings.canIUse === 'function' ? settings.canIUse(api) : Boolean(settings.canIUse)) },
     navigateTo(payload) {
       state.navigations.push(payload.url)
@@ -156,11 +157,13 @@ function resetStorage() {
 }
 
 function flushTimers() {
-  while (scheduledTimers.length) scheduledTimers.shift()()
+  // Treat callbacks scheduled during this batch as future ticks.
+  scheduledTimers.splice(0).forEach((callback) => callback())
 }
 
 async function main() {
-  global.setTimeout = (callback) => { scheduledTimers.push(callback); return scheduledTimers.length }
+  let timerId = 0
+  global.setTimeout = (callback) => { scheduledTimers.push(callback); return ++timerId }
   resetStorage()
   let wxState = makeWx()
 
@@ -184,9 +187,9 @@ async function main() {
   const photoCardWxml = fs.readFileSync(path.join(ROOT, 'miniprogram/components/photo-card/photo-card.wxml'), 'utf8')
   const photoCardWxss = fs.readFileSync(path.join(ROOT, 'miniprogram/components/photo-card/photo-card.wxss'), 'utf8')
   const profileWxss = fs.readFileSync(path.join(ROOT, 'miniprogram/pages/profile/profile.wxss'), 'utf8')
-  check(/点击或长按/.test(catDisplayWxml) && /当前状态/.test(catDisplayWxml) && /idle 素材/.test(catDisplayWxml) && /Emoji 占位/.test(catDisplayWxml), 'cat display exposes readable gesture, state and image fallback copy')
-  check(/点击或长按/.test(chatWxml) && /idle 素材/.test(chatWxml) && /Emoji 占位/.test(chatWxml), 'chat page exposes readable cat fallback guidance')
-  check(/当前状态/.test(profileWxml) && /点击或长按/.test(profileWxml) && /idle 素材/.test(profileWxml), 'profile page exposes readable cat state guidance')
+  check(/点击或长按/.test(catDisplayWxml) && /当前状态/.test(catDisplayWxml) && /bindtap="onPet"/.test(catDisplayWxml) && /bindlongpress="onPet"/.test(catDisplayWxml) && /assetFallback === 'emoji' \? '，显示 Emoji 占位'/.test(catDisplayWxml), 'cat display exposes readable gesture, state and image fallback copy')
+  check(/<cat-display[^>]+bind:pet="onPet"/.test(chatWxml) && /bindtap="onPet"/.test(chatWxml), 'chat exposes both cat gesture and button entry points')
+  check(/当前状态/.test(profileWxml) && /formImageFailed/.test(profileWxml) && /Emoji 占位/.test(profileWxml), 'profile reports cat state and failed media')
   check(/recipe-tab-state/.test(recipeUxWxml) && /当前分类/.test(recipeUxWxml) && /新增菜品/.test(recipeUxWxml), 'recipe tabs expose current state/count and a labeled add action')
   check(/照片预览/.test(albumUxWxml) && /长按照片可尝试保存到系统相册/.test(albumUxWxml) && /编辑签名/.test(albumUxWxml), 'album exposes labeled preview/save/signature actions')
   check(/不会自动绑定/.test(bindUxWxml) && /跨设备同步/.test(bindUxWxml) && /手动记录/.test(bindUxWxml) && /确认绑定/.test(bindUxWxml), 'bind page exposes local-only boundary and explicit confirmation copy')
@@ -194,7 +197,7 @@ async function main() {
   check(/已开启/.test(settingsUxWxml) && /已关闭/.test(settingsUxWxml) && /清除当前设备/.test(settingsUxWxml), 'settings page exposes switch state and local clear boundary')
   check(/返回上一页/.test(navUxWxml) && /aria-label/.test(navUxWxml), 'navigation bar exposes a readable back action')
   check(/class="loading__dot"/.test(loadingWxml) && /class="loading__text"/.test(loadingWxml) && /\.loading > \.loading__dot \+ \.loading__text\s*\{[^}]*margin-left:\s*12rpx/.test(loadingWxss) && !hasTagNameSelector(loadingWxss), 'loading spacing uses node classes without component WXSS tag selectors')
-  check(/class="recipe-cover__image"/.test(recipeCardWxml) && /class="recipe-placeholder__icon"/.test(recipeCardWxml) && /class="recipe-placeholder__caption"/.test(recipeCardWxml) && /class="lock-badge__text"/.test(recipeCardWxml) && /recipe-placeholder__caption, \.recipe-placeholder-label\s*\{[^}]*margin-top:\s*10rpx/.test(recipeCardWxss) && /recipe-placeholder__icon:first-child\s*\{[^}]*font-size:\s*56rpx[^}]*filter:\s*grayscale\(\.4\)/.test(recipeCardWxss) && /lock-badge__text\s*\{[^}]*margin-left:\s*4rpx[^}]*font-size:\s*18rpx/.test(recipeCardWxss) && !hasTagNameSelector(recipeCardWxss), 'recipe card class selectors preserve image, placeholder spacing/icon and lock badge styles')
+  check(/class="recipe-cover__image"[^>]*binderror="onImageError"/.test(recipeCardWxml) && /class="recipe-placeholder-label">照片占位/.test(recipeCardWxml) && /class="lock-badge">待解锁/.test(recipeCardWxml) && /recipe-drawing__lock/.test(recipeCardWxss) && !hasTagNameSelector(recipeCardWxss), 'recipe card preserves a real cover, readable photo fallback and a distinct locked illustration')
   check(/class="photo-card__image"/.test(photoCardWxml) && /class="photo-placeholder__icon"/.test(photoCardWxml) && /class="photo-placeholder__caption"/.test(photoCardWxml) && /photo-placeholder__icon, \.photo-placeholder__caption\s*\{[^}]*font-size:\s*68rpx[^}]*opacity:\s*\.7/.test(photoCardWxss) && /photo-placeholder__caption\s*\{[^}]*font-size:\s*18rpx/.test(photoCardWxss) && !hasTagNameSelector(photoCardWxss), 'photo card class selectors preserve image and placeholder text styles without tag selectors')
   check(/class="profile-hero__avatar"/.test(profileWxml) && /\.profile-hero__avatar, \.profile-hero > \.edit-link\s*\{[^}]*flex-shrink:\s*0/.test(profileWxss) && /\.profile-hero__copy\s*\{[^}]*min-width:\s*0/.test(profileWxss) && /\.profile-signature\s*\{[^}]*min-width:\s*0[^}]*overflow:\s*hidden[^}]*text-overflow:\s*ellipsis[^}]*white-space:\s*nowrap/.test(profileWxss), 'profile hero protects avatar/copy width and truncates the signature to one line')
   const avatarComponent = loadComponent('miniprogram/components/avatar/avatar.js')
@@ -280,6 +283,18 @@ async function main() {
   check(profileProgress.data.progress.nextFormName === '花嫁猫' && profileProgress.data.progress.anniversaryRemaining === 365, 'profile exposes level 3 anniversary progress')
   const chat = loadPage('miniprogram/pages/chat/chat.js')
   chat.onLoad()
+  check(/bindkeyboardheightchange="onKeyboardHeightChange"/.test(chatWxml) && /bindblur="onKeyboardBlur"/.test(chatWxml) && /keyboardHeight > 0/.test(chatWxml), 'chat input updates the keyboard layout class and clears it on blur')
+  chat.onKeyboardHeightChange({ detail: { height: 300 } })
+  check(chat.data.keyboardHeight === 300, 'positive keyboard height selects the compact chat layout')
+  chat.onKeyboardBlur()
+  check(chat.data.keyboardHeight === 0, 'blurring the chat input restores the room')
+  chat.onKeyboardHeightChange({ detail: { height: 300 } })
+  chat.onKeyboardHeightChange({ detail: { height: 0 } })
+  check(chat.data.keyboardHeight === 0, 'zero height restores the room even without blur')
+  chat.setData({ inputValue: '   ' })
+  const messagesBeforeEmptySend = chatService.list().length
+  chat.send()
+  check(chatService.list().length === messagesBeforeEmptySend && /先写点/.test(wxState.toasts.at(-1).title), 'blank chat message is rejected without writing data')
   chat.setData({ inputValue: '今天也一起努力呀' })
   chat.send()
   check(chat.data.upgradeTip === '', 'chat does not show upgrade before anniversary')
@@ -352,10 +367,20 @@ async function main() {
   check(userService.getSettings().albumSignature === '页面内签名' && !albumEdit.data.editingSignature, 'album signature draft saves and exits edit mode')
   const recipeAdd = loadPage('miniprogram/pages/recipe-add/recipe-add.js')
   recipeAdd.onLoad({})
+  const beforeCreate = recipeService.list().length
+  check(!recipeAdd.data.isEdit && recipeAdd.data.form.rating === 0 && wxState.titles.length === 0, 'new recipe uses native default title and starts at zero hearts')
+  recipeAdd.pickRating({ currentTarget: { dataset: { rating: '3' } } })
+  check(recipeAdd.data.form.rating === 3, 'rating selection exposes the numeric value for both hearts and label')
+  await recipeAdd.save()
+  check(recipeService.list().length === beforeCreate && wxState.toasts.at(-1).title === '请写下菜名', 'empty recipe name is rejected without saving')
   recipeAdd.setData({ 'form.name': 'headless 菜品' })
   await recipeAdd.save()
   flushTimers()
-  check(recipeService.list().some((item) => item.name === 'headless 菜品'), 'recipe add saves and returns')
+  const createdRecipe = recipeService.list().find((item) => item.name === 'headless 菜品')
+  check(createdRecipe && !createdRecipe.isUnlocked && createdRecipe.rating === 3, 'recipe add saves without photos and keeps the rating')
+  const editRecipe = loadPage('miniprogram/pages/recipe-add/recipe-add.js')
+  editRecipe.onLoad({ id: createdRecipe.recipeId })
+  check(editRecipe.data.isEdit && editRecipe.data.form.name === createdRecipe.name && editRecipe.data.form.rating === 3 && wxState.titles.at(-1) === '编辑菜品', 'recipe edit restores the form and sets the native title')
   const lockedRecipe = recipeService.create({ name: '锁定详情菜品', category: 'custom' })
   const recipeDetailWxml = fs.readFileSync(path.join(ROOT, 'miniprogram/pages/recipe-detail/recipe-detail.wxml'), 'utf8')
   check(/还没吃过哦/.test(recipeDetailWxml) && /补充照片解锁/.test(recipeDetailWxml) && /recipe\.isUnlocked/.test(recipeDetailWxml), 'recipe detail source exposes locked copy and unlock CTA')
@@ -366,6 +391,25 @@ async function main() {
   lockedDetail.choosePhoto()
   await new Promise((resolve) => originalSetTimeout(resolve, 0))
   check(lockedDetail.data.recipe.isUnlocked && lockedDetail.data.photoItems.length === 1 && recipeService.get(lockedRecipe.recipeId).photos.length === 1, 'successful detail photo add reloads into unlocked state')
+
+  const recipeGallery = loadPage('miniprogram/pages/recipe/recipe.js')
+  recipeGallery.onLoad()
+  recipeGallery.switchTab({ currentTarget: { dataset: { tab: 'unlocked' } } })
+  check(recipeGallery.data.unlockedCount === 1 && recipeGallery.data.recipes.length === 1 && recipeGallery.data.recipes[0].recipeId === lockedRecipe.recipeId, 'newly unlocked recipe appears under the unlocked filter')
+  recipeGallery.goAdd()
+  check(wxState.navigations.at(-1) === '/pages/recipe-add/recipe-add', 'recipe gallery opens the existing add route')
+
+  wxState = makeWx({ tempFilePaths: Array.from({ length: 10 }, (_, index) => `local://recipe-test-${index}`) })
+  const editPhotos = loadPage('miniprogram/pages/recipe-add/recipe-add.js')
+  editPhotos.onLoad({ id: lockedRecipe.recipeId })
+  editPhotos.onShow()
+  check(editPhotos.data.photoItems.length === 1 && editPhotos.data.photoItems[0].hasImage, 'edit presents an existing local image')
+  editPhotos.choosePhoto()
+  check(editPhotos.data.photos.length === 9 && editPhotos.data.photoItems.length === 9 && !editPhotos.data.choosingPhoto, 'photo selection stops at nine and clears busy state')
+  editPhotos.choosePhoto()
+  check(wxState.chooseImageCalls === 1 && wxState.toasts.at(-1).title.includes('最多添加 9 张'), 'photo limit does not reopen the picker')
+  editPhotos.onPhotoError({ currentTarget: { dataset: { index: 0 } } })
+  check(!editPhotos.data.photoItems[0].hasImage && editPhotos.data.photos.length === 9, 'failed thumbnail shows a placeholder without discarding photo metadata')
 
   resetStorage()
   wxState = makeWx()
@@ -441,6 +485,8 @@ async function main() {
   recipeDetailMissing.goRecipe()
   check(wxState.tabs.includes('/pages/recipe/recipe'), 'missing recipe can return to recipe tab')
   const albumUpload = loadPage('miniprogram/pages/album-upload/album-upload.js')
+  await albumUpload.save()
+  check(albumService.total() === 0 && /先选择至少一张/.test(wxState.toasts.at(-1).title), 'empty album upload stops without writing records')
   albumUpload.chooseImage()
   check(albumUpload.data.images.length === 1, 'album upload records selected image')
   await albumUpload.save()
@@ -449,6 +495,16 @@ async function main() {
   albumEdit.onShow()
   const presentedPhotos = albumEdit.data.groups.reduce((all, group) => all.concat(group.photos), [])
   check(presentedPhotos.length === 1 && presentedPhotos[0].uploaderLabel === userService.getCurrentUser().nickname, 'album grid exposes a safe uploader label after upload')
+
+  wxState = makeWx({ tempFilePaths: Array.from({ length: 10 }, (_, i) => `local://album-batch-${i}`) })
+  const fullUpload = loadPage('miniprogram/pages/album-upload/album-upload.js')
+  fullUpload.onShow()
+  fullUpload.chooseImage()
+  check(fullUpload.data.images.length === 9 && fullUpload.data.imageItems.length === 9, 'album batch and previews stop at nine images')
+  fullUpload.chooseImage()
+  check(wxState.chooseImageCalls === 1 && /最多 9/.test(wxState.toasts.at(-1).title), 'a full batch does not open the picker again')
+  fullUpload.onImageError({ currentTarget: { dataset: { index: 0 } } })
+  check(!fullUpload.data.imageItems[0].hasImage && fullUpload.data.imageItems[1].hasImage, 'a broken photo uses a placeholder without replacing adjacent previews')
 
   // Cancellation, permission, navigation, quota and file failure recovery.
   resetStorage()

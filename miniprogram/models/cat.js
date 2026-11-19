@@ -2,7 +2,7 @@ const { now, clamp } = require('../utils/util')
 
 const FORM_BY_LEVEL = { 1: 'baby', 2: 'genki', 3: 'jk', 4: 'bride' }
 const FORM_META = {
-  baby: { key: 'baby', level: 1, name: '小奶猫', emoji: '🐱', imagePath: '/assets/batiao/lv1-baby/idle.png', assets: { idle: 'idle.png' }, placeholder: '奶黄色猫咪占位' },
+  baby: { key: 'baby', level: 1, name: '小奶猫', emoji: '🐱', imagePath: '/assets/batiao/lv1-baby/idle.png', assets: { idle: 'idle.png', happy: 'happy.png', eating: 'eating.png', sad: 'sad.png', sleeping: 'sleeping.png' }, avatarPath: '/assets/batiao/lv1-baby/avatar.png', placeholder: '小奶猫占位' },
   genki: { key: 'genki', level: 2, name: '元气猫', emoji: '😺', imagePath: '/assets/batiao/lv2-genki/idle.png', assets: { idle: 'idle.png' }, placeholder: '元气猫咪占位' },
   jk: { key: 'jk', level: 3, name: 'JK 猫猫', emoji: '🐱', imagePath: '/assets/batiao/lv3-jk/idle.png', assets: { idle: 'idle.png' }, placeholder: 'JK 猫咪占位' },
   bride: { key: 'bride', level: 4, name: '花嫁猫', emoji: '👰', imagePath: '/assets/batiao/lv4-bride/idle.png', assets: { idle: 'idle.png' }, placeholder: '花嫁猫咪占位' }
@@ -144,11 +144,12 @@ function getFormAsset(form, state) {
     animationClass: stateMeta.animationClass,
     assetKey: stateMeta.assetKey,
     imagePath,
+    idlePath,
     hasImage: Boolean(imagePath),
     hasDedicatedAsset,
     fallback: hasDedicatedAsset ? 'state' : 'idle',
     fallbackReason: hasDedicatedAsset ? 'dedicated' : 'missing-state-asset',
-    fallbackText: hasDedicatedAsset ? '当前使用 idle 素材' : '当前状态没有专用图片，使用 idle 素材和轻量动效'
+    fallbackText: hasDedicatedAsset ? `当前使用 ${stateMeta.assetKey} 素材` : '当前状态没有专用图片，使用 idle 素材和轻量动效'
   }
 }
 

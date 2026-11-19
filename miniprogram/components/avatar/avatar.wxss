@@ -1,4 +1,4 @@
-.avatar { width: 112rpx; height: 112rpx; border-radius: 50%; background: linear-gradient(135deg, #FFE2EA, #E8D5F5); border: 5rpx solid #fff; box-shadow: 0 0 0 3rpx var(--color-primary); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.avatar { box-sizing: border-box; width: 112rpx; height: 112rpx; border-radius: 50%; background: linear-gradient(135deg, #fff4d8, #efd2aa); border: 3rpx solid #8e674f; box-shadow: inset 0 0 0 4rpx #fffaec; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .avatar--large { width: 150rpx; height: 150rpx; }
 .avatar--small { width: 90rpx; height: 90rpx; border-width: 3rpx; box-shadow: none; }
 .avatar__image { display: block; width: 100%; height: 100%; }

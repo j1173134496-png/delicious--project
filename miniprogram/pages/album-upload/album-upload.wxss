@@ -1,24 +1,26 @@
-.upload-page { padding-top: 12rpx; }
-.upload-card, .form-card { padding: 26rpx 28rpx; margin-bottom: 24rpx; }
-.upload-head { display: flex; justify-content: space-between; align-items: center; }
-.form-label { color: var(--color-title); font-size: 27rpx; }
-.photo-count { color: var(--color-muted); font-size: 22rpx; }
-.photo-grid { display: flex; flex-wrap: wrap; margin-top: 20rpx; }
-.photo-grid > view + view { margin-left: 12rpx; }
-.photo-grid > view:nth-child(4n + 1) { margin-left: 0; }
-.photo-item, .photo-add { width: calc(25% - 9rpx); }
-.photo-item, .photo-add { height: 132rpx; border-radius: 16rpx; overflow: hidden; }
-.photo-item image { width: 100%; height: 100%; display: block; }
-.photo-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #FFF7E8; color: var(--color-muted); font-size: 42rpx; }
-.photo-placeholder text { font-size: 18rpx; }
-.photo-add { background: #FFF2F5; color: var(--color-primary-dark); display: flex; justify-content: center; align-items: center; font-size: 28rpx; text-align: center; }
-.photo-add--disabled { opacity: .5; }
-.upload-hint { display: block; margin-top: 18rpx; color: var(--color-muted); font-size: 21rpx; }
-.form-card { padding-top: 8rpx; padding-bottom: 8rpx; }
-.form-row { min-height: 98rpx; display: flex; align-items: center; justify-content: space-between; border-bottom: 1rpx solid #F5EDF2; }
-.picker-value { color: var(--color-text); font-size: 26rpx; }
-.picker-value text { color: var(--color-muted); margin-left: 8rpx; }
-.form-column { padding: 22rpx 0; }
-.form-textarea { margin-top: 16rpx; width: 100%; min-height: 150rpx; background: #FFF9FB; border-radius: 18rpx; padding: 18rpx; color: var(--color-text); font-size: 25rpx; }
-.tag-input { margin-top: 16rpx; width: 100%; background: #FFF9FB; border-radius: 18rpx; padding: 18rpx; color: var(--color-text); font-size: 25rpx; }
-.save-button { width: 80%; margin: 36rpx auto 0; }
+.upload-head { display: flex; align-items: center; justify-content: space-between; }
+.photo-count { color: var(--journal-muted); font-size: 25rpx; font-weight: 600; }
+.photo-grid { display: flex; flex-wrap: wrap; margin-top: 19rpx; }
+.photo-item, .photo-add { flex: none; width: calc(33.333% - 8rpx); min-width: 0; margin: 0 12rpx 12rpx 0; height: 154rpx; border-radius: 18rpx; overflow: hidden; }
+.photo-item:nth-child(3n), .photo-add:nth-child(3n) { margin-right: 0; }
+.photo-item { border: 2rpx solid var(--journal-outline); }
+.upload-thumb { width: 100%; height: 100%; display: block; }
+.photo-placeholder, .photo-add { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--journal-ink); font-size: 23rpx; line-height: 1.3; }
+.photo-placeholder { height: 100%; background: #f5e5c8; }
+.photo-add { width: calc(33.333% - 8rpx) !important; background: var(--journal-field); border: 2rpx dashed var(--journal-outline); font-weight: 700; }
+.photo-add[disabled] { color: var(--journal-muted); background: #f3e7d6; }
+.photo-add .journal-camera, .photo-placeholder .journal-camera { margin-bottom: 13rpx; }
+.photo-motif { position: relative; flex: 1; min-width: 0; height: 154rpx; }
+.motif-print { position: absolute; left: 45%; top: 9rpx; width: 105rpx; height: 123rpx; border: 3rpx solid var(--journal-outline); border-radius: 7rpx; transform: rotate(11deg); background: #fffaf0; box-shadow: 4rpx 5rpx 0 #ceb18e; padding: 8rpx; }
+.motif-print--back { left: 29%; top: 22rpx; transform: rotate(-15deg); background: #f1d9b3; }
+.motif-picture { display: flex; align-items: center; justify-content: center; height: 83%; background: #e9c6a5; border: 2rpx solid #ad826a; color: var(--journal-coral); font-size: 36rpx; }
+.motif-spark { position: absolute; top: 12rpx; right: 5%; font-size: 39rpx; color: #a16631; }
+.upload-hint { display: block; text-align: center; border-radius: 12rpx; padding: 9rpx 12rpx; background: #fae4ac; color: var(--journal-ink); font-size: 23rpx; line-height: 1.4; }
+.form-card { padding-top: 17rpx; padding-bottom: 24rpx; }
+.form-row { display: flex; align-items: center; justify-content: space-between; min-height: 77rpx; padding-bottom: 9rpx; border-bottom: 2rpx dashed var(--journal-stitch); }
+.form-label { color: var(--journal-ink); font-size: 28rpx; font-weight: 700; }
+.form-column { margin-top: 18rpx; }
+.tag-input, .form-textarea { margin-top: 10rpx; width: 100%; padding: 12rpx 16rpx; font-size: 25rpx; }
+.form-textarea { height: 110rpx; }
+.tag-input { height: 67rpx; }
+.local-note { margin-top: 19rpx; text-align: center; }

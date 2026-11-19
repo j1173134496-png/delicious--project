@@ -1,0 +1,107 @@
+page {
+  --journal-ink: #41271d;
+  --journal-muted: #725445;
+  --journal-outline: #704d3c;
+  --journal-stitch: #a28168;
+  --journal-paper: #fffaeb;
+  --journal-field: #fffdf6;
+  --journal-honey: #f7d588;
+  --journal-coral: #a8383d;
+  --journal-pink: #f6c5b8;
+  --journal-bg: #f8e8c5;
+  --journal-lilac: #ead9f4;
+  --journal-sage: #d8e7d1;
+}
+
+.journal-page {
+  color: var(--journal-ink);
+  background: radial-gradient(ellipse at 94% 12%, #f4dcae 0%, transparent 48%),
+    radial-gradient(ellipse at 2% 86%, #f4d9a6 0%, transparent 49%), var(--journal-bg);
+}
+
+.journal-inset { min-height: 100vh; padding: 30rpx 28rpx 38rpx; padding-bottom: calc(38rpx + env(safe-area-inset-bottom)); }
+.journal-panel { padding: 26rpx 28rpx; margin-bottom: 24rpx; }
+.journal-title { display: block; color: var(--journal-ink); font-size: 34rpx; line-height: 1.25; font-weight: 750; }
+.journal-hint { display: block; color: var(--journal-muted); font-size: 24rpx; line-height: 1.55; }
+.journal-field { min-width: 0; border: 2rpx solid var(--journal-outline); border-radius: 18rpx; background: var(--journal-field); color: var(--journal-ink); }
+.journal-placeholder { color: #826753; }
+.journal-action { width: 70% !important; min-width: 0; margin: 22rpx auto 7rpx; }
+.journal-compact { width: auto !important; min-width: 0; min-height: 64rpx; padding: 10rpx 21rpx; line-height: 1.3; font-size: 24rpx; margin: 0; }
+.journal-camera { position: relative; display: flex; align-items: center; justify-content: center; box-sizing: border-box; width: 62rpx; height: 44rpx; border: 3rpx solid var(--journal-outline); border-radius: 9rpx; background: #f6d8aa; font-weight: 700; }
+.journal-camera::before { content: ''; position: absolute; top: -10rpx; left: 6rpx; width: 20rpx; height: 8rpx; border: 3rpx solid var(--journal-outline); border-bottom: 0; border-radius: 5rpx 5rpx 0 0; background: #f6d8aa; }
+.journal-camera::after { content: ''; position: absolute; width: 28rpx; height: 28rpx; border: 2rpx solid var(--journal-outline); border-radius: 50%; }
+
+.journal-sheet {
+  position: relative;
+  background: var(--journal-paper);
+  border: 3rpx solid var(--journal-outline);
+  border-radius: 29rpx;
+  box-shadow: 5rpx 7rpx 0 rgba(112, 77, 60, .17);
+}
+
+.journal-sheet::before {
+  content: '';
+  position: absolute;
+  top: 9rpx;
+  right: 9rpx;
+  bottom: 9rpx;
+  left: 9rpx;
+  border: 2rpx dashed var(--journal-stitch);
+  border-radius: 21rpx;
+  pointer-events: none;
+}
+
+.journal-tape {
+  position: absolute;
+  top: -8rpx;
+  left: 13rpx;
+  z-index: 1;
+  width: 76rpx;
+  height: 25rpx;
+  border: 2rpx solid #c69855;
+  box-shadow: 2rpx 3rpx 0 rgba(112, 77, 60, .12);
+  background: repeating-linear-gradient(115deg, #f2cb84 0 7rpx, #f9dfaa 7rpx 14rpx);
+  transform: rotate(-17deg);
+  pointer-events: none;
+}
+
+.journal-chip {
+  display: inline-flex;
+  align-items: center;
+  color: var(--journal-ink);
+  background: var(--journal-honey);
+  border-radius: 999rpx;
+  padding: 9rpx 18rpx;
+  font-size: 24rpx;
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+.journal-primary {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 86rpx;
+  padding: 14rpx 34rpx;
+  border: 3rpx solid #743533;
+  border-radius: 999rpx;
+  color: #fffaf3;
+  background: linear-gradient(160deg, #bd4649, #a8383d);
+  box-shadow: inset 0 6rpx 0 rgba(255, 255, 255, .19), 0 6rpx 0 #7c3b35, 0 12rpx 0 rgba(124, 59, 53, .12);
+  font-size: 30rpx;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+.journal-primary--pressed {
+  transform: translateY(3rpx);
+  box-shadow: inset 0 4rpx 0 rgba(255, 255, 255, .16), 0 3rpx 0 #7c3b35;
+}
+
+.journal-primary[disabled] {
+  color: #613b33;
+  background: #efd5c6;
+  border-color: #a4816a;
+  box-shadow: none;
+}

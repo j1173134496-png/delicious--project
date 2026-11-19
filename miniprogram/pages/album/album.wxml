@@ -1,9 +1,32 @@
-<view class="safe-page album-page">
-  <view class="album-hero card"><view class="album-couple"><avatar size="small" avatar="{{user.avatar}}" fallback="🐰" /><text>♥</text><avatar size="small" avatar="{{isBound ? couple.partner.avatar : ''}}" fallback="{{isBound ? '🌷' : '？'}}" /></view><text class="together" wx:if="{{isBound}}">在一起的第 <text>{{togetherDays}}</text> 天</text><text class="together together--empty" wx:else>先绑定 Ta，再开始记录共同的第 1 天</text><button class="ghost-button bind-album-button" wx:if="{{!isBound}}" bindtap="goBind">邀请 Ta 一起记录</button><view class="album-summary"><text>共收藏 {{total}} 张照片</text><text class="signature" aria-label="编辑相册签名" wx:if="{{!editingSignature}}" bindtap="editSignature">{{signature}} · 编辑签名</text><view class="signature-editor" wx:else><input value="{{signatureDraft}}" maxlength="60" bindinput="onSignatureInput" placeholder="写一句甜甜的话" /><view><button class="ghost-button" loading="{{savingSignature}}" disabled="{{savingSignature}}" bindtap="saveSignature">保存签名</button><button class="ghost-button" disabled="{{savingSignature}}" bindtap="cancelSignature">取消编辑</button></view></view></view></view>
-  <text class="hint capability-hint" wx:if="{{!capabilities.saveImageToPhotosAlbum}}">当前环境暂不支持保存到系统相册，仍可在小程序内预览和删除记录。</text>
-  <view wx:if="{{groups.length}}"><view wx:for="{{groups}}" wx:key="month" class="month-section"><view class="month-title"><text>♡ {{item.label}}</text><text>{{item.photos.length}} 张</text></view><view class="photo-grid"><photo-card wx:for="{{item.photos}}" wx:key="photoId" photo="{{item}}" bind:select="preview" bind:save="saveToAlbum" /></view></view></view>
-  <empty-state wx:else icon="📷" text="还没有你们的照片" actionText="上传第一张" bind:action="goUpload" />
-  <button class="floating-add" aria-label="上传照片" bindtap="goUpload">＋ 上传照片</button>
+<view class="journal-page journal-inset album-page">
+  <view class="journal-sheet journal-panel album-hero">
+    <view class="journal-tape" aria-hidden="true"></view><view class="journal-tape album-tape--right" aria-hidden="true"></view>
+    <view class="album-couple"><avatar size="medium" avatar="{{user.avatar}}" fallback="🐰" /><text class="album-heart" aria-hidden="true">♥</text><avatar size="medium" avatar="{{isBound ? couple.partner.avatar : ''}}" fallback="{{isBound ? '🌷' : '？'}}" /></view>
+    <text class="together" wx:if="{{isBound}}">在一起的第 <text class="album-days">{{togetherDays}}</text> 天</text>
+    <text class="together" wx:else>邀请 Ta，一起记录你们的故事</text>
+    <button class="journal-chip journal-compact bind-album-button" wx:if="{{!isBound}}" bindtap="goBind">邀请 Ta 一起记录</button>
+    <view class="album-summary">
+      <text class="album-total">共收藏 {{total}} 张照片</text>
+      <view class="signature-editor" wx:if="{{!editingSignature}}"><text class="signature">{{signature}}</text><button class="ghost-button journal-compact signature-action" aria-label="编辑相册签名" bindtap="editSignature">编辑签名</button></view>
+      <view class="signature-editor" wx:else><input class="journal-field signature-input" value="{{signatureDraft}}" maxlength="60" aria-label="相册签名" bindinput="onSignatureInput" placeholder="写一句甜甜的话" /><view class="signature-actions"><button class="secondary-button journal-compact" loading="{{savingSignature}}" disabled="{{savingSignature}}" bindtap="saveSignature">保存签名</button><button class="ghost-button journal-compact" disabled="{{savingSignature}}" bindtap="cancelSignature">取消编辑</button></view></view>
+    </view>
+  </view>
+  <view wx:if="{{groups.length}}">
+    <button class="journal-primary journal-action" aria-label="上传照片" hover-class="journal-primary--pressed" bindtap="goUpload">＋ 上传照片</button>
+    <text class="capability-hint" wx:if="{{!capabilities.saveImageToPhotosAlbum}}">当前环境暂不支持保存到系统相册，仍可在小程序内预览和删除记录。</text>
+    <view wx:for="{{groups}}" wx:key="month" class="month-section"><view class="month-title"><text>♡ {{item.label}}</text><text class="month-count">{{item.photos.length}} 张</text></view><view class="photo-grid"><view class="album-photo-cell" wx:for="{{item.photos}}" wx:for-item="photo" wx:key="photoId"><photo-card photo="{{photo}}" bind:select="preview" bind:save="saveToAlbum" /></view></view></view>
+  </view>
+  <view wx:else class="album-empty">
+    <view class="album-illustration" aria-hidden="true">
+      <view class="memory-print memory-print--left"><view class="print-art print-art--pale"></view><view class="journal-tape"></view></view>
+      <view class="memory-print memory-print--right"><view class="print-art print-art--green"></view><view class="journal-tape"></view></view>
+      <view class="memory-print memory-print--front"><view class="print-art"><view class="journal-camera"></view></view></view>
+      <text class="album-spark album-spark--left">✦</text><text class="album-spark album-spark--right">♡</text>
+    </view>
+    <text class="journal-title">还没有你们的照片</text>
+    <text class="journal-hint album-empty-hint">把平凡日子贴进你们的回忆手账。</text>
+    <button class="journal-primary journal-action" aria-label="上传第一张照片" hover-class="journal-primary--pressed" bindtap="goUpload">＋ 上传第一张照片</button>
+  </view>
 
   <view class="preview-overlay" wx:if="{{previewVisible}}"><view class="preview-top"><button class="preview-close" aria-label="关闭照片预览" bindtap="closePreview">× 关闭</button><text>{{previewIndex + 1}} / {{previewPhotos.length}}</text></view><swiper class="preview-swiper" aria-label="照片预览，可左右滑动" current="{{previewIndex}}" circular="false" bindchange="onPreviewChange"><swiper-item wx:for="{{previewPhotos}}" wx:key="photoId"><image wx:if="{{item.hasImage}}" src="{{item.renderPath}}" mode="aspectFit" data-index="{{index}}" binderror="onPreviewError" bindlongpress="saveCurrent" /><view wx:else class="preview-placeholder">📷<text>照片占位</text></view></swiper-item></swiper><view class="preview-caption"><text>{{currentPhoto.description || '没有描述，也是一段可爱的回忆'}}</text><text>{{currentPhoto.date}}</text><text>上传者：{{currentPhoto.uploaderLabel || '本机记录'}}</text><text class="preview-save-hint">长按照片可尝试保存到系统相册；能力不可用时请按上方提示处理。</text><button wx:if="{{canDelete}}" class="preview-delete" bindtap="deleteCurrent">删除这张照片</button></view></view>
 </view>

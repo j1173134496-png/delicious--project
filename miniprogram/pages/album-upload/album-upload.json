@@ -1,4 +1,3 @@
 {
-  "navigationBarTitleText": "上传照片",
-  "usingComponents": { "nav-bar": "/components/nav-bar/nav-bar" }
+  "navigationBarTitleText": "上传照片"
 }

@@ -21,12 +21,15 @@ function createPageTask() {
     const expected = token
     let timer
     timer = setTimeout(() => {
-      timers.delete(timer)
-      if (!active || expected !== token) return
+      if (!active || expected !== token || !timers.delete(timer)) return
       callback()
     }, delay)
     timers.add(timer)
     return timer
+  }
+
+  function clearTimer(timer) {
+    if (timers.delete(timer)) clearTimeout(timer)
   }
 
   function guard(callback) {
@@ -40,7 +43,7 @@ function createPageTask() {
   function isActive() { return active }
   function currentToken() { return token }
 
-  return { activate, cancel, setTimer, guard, isActive, currentToken }
+  return { activate, cancel, setTimer, clearTimer, guard, isActive, currentToken }
 }
 
 module.exports = { createPageTask }

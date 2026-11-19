@@ -1,6 +1,20 @@
-<view class="safe-page upload-page">
-  <nav-bar title="上传照片" showBack="{{true}}" />
-  <view class="upload-card card"><view class="upload-head"><text class="form-label">选择照片</text><text class="photo-count">{{images.length}} / 9（最多 9 张）</text></view><view class="photo-grid"><view wx:for="{{imageItems}}" wx:key="path" class="photo-item"><image wx:if="{{item.hasImage}}" src="{{item.imagePath}}" mode="aspectFill" binderror="onImageError" data-index="{{index}}" /><view wx:else class="photo-placeholder">📷<text>照片占位</text></view></view><view class="photo-add {{choosingImage ? 'photo-add--disabled' : ''}}" aria-label="选择照片" bindtap="chooseImage">＋ 选择照片</view></view><text class="upload-hint">一次最多选择 9 张，可以从相册选择或拍照。</text><text class="hint capability-hint" wx:if="{{!capabilities.chooseImage}}">当前环境不能选图，可先填写日期和文字说明。</text></view>
-  <view class="form-card card"><view class="form-row"><text class="form-label">日期</text><picker mode="date" value="{{date}}" start="2000-01-01" end="{{today}}" bindchange="onDateChange"><view class="picker-value">{{date}} <text>⌄</text></view></picker></view><view class="form-column"><text class="form-label">描述</text><textarea class="form-textarea" maxlength="200" value="{{description}}" bindinput="onDescriptionInput" placeholder="这一天发生了什么呀？" /></view><view class="form-column"><text class="form-label">标签</text><input class="tag-input" maxlength="60" value="{{tagText}}" bindinput="onTagInput" placeholder="用逗号分隔，例如：旅行,晚餐" /></view></view>
-  <button class="primary-button save-button" loading="{{saving}}" disabled="{{saving}}" bindtap="save">保存回忆</button>
+<view class="journal-page journal-inset upload-page">
+  <view class="upload-card journal-sheet journal-panel">
+    <view class="journal-tape" aria-hidden="true"></view>
+    <view class="upload-head"><text class="journal-title">选择照片</text><text class="photo-count">{{images.length}} / 9 张</text></view>
+    <view class="photo-grid">
+      <view wx:for="{{imageItems}}" wx:key="path" class="photo-item"><image wx:if="{{item.hasImage}}" class="upload-thumb" src="{{item.imagePath}}" mode="aspectFill" binderror="onImageError" data-index="{{index}}" /><view wx:else class="photo-placeholder"><view class="journal-camera" aria-hidden="true"></view><text>照片占位</text></view></view>
+      <button wx:if="{{images.length < 9}}" class="photo-add" aria-label="选择照片，最多 9 张" disabled="{{choosingImage || saving || !capabilities.chooseImage}}" bindtap="chooseImage"><view class="journal-camera" aria-hidden="true">＋</view><text>{{choosingImage ? '选图中…' : '选择照片'}}</text></button>
+      <view class="photo-motif" wx:if="{{!images.length}}" aria-hidden="true"><view class="motif-print motif-print--back"></view><view class="motif-print"><view class="motif-picture">♥</view></view><text class="motif-spark">✦</text></view>
+    </view>
+    <text class="upload-hint">{{images.length === 9 ? '已选 9 张，达到单批上限。' : '可从相册选择或拍照，一次最多 9 张。'}}</text>
+    <text class="capability-hint" wx:if="{{!capabilities.chooseImage}}">当前环境不能选图，暂不能保存新照片。</text>
+  </view>
+  <view class="form-card journal-sheet journal-panel">
+    <view class="form-row"><text class="form-label">日期</text><picker mode="date" value="{{date}}" start="2000-01-01" end="{{today}}" aria-label="照片日期，{{date}}" bindchange="onDateChange"><view class="journal-chip">{{date}} ▾</view></picker></view>
+    <view class="form-column"><text class="form-label">描述</text><textarea class="journal-field form-textarea" maxlength="200" aria-label="照片描述，选填" value="{{description}}" bindinput="onDescriptionInput" placeholder="这一天发生了什么呀？" placeholder-class="journal-placeholder" /></view>
+    <view class="form-column"><text class="form-label">标签</text><input class="journal-field tag-input" maxlength="60" aria-label="照片标签，选填" value="{{tagText}}" bindinput="onTagInput" placeholder="用逗号分隔，例如：旅行，晚餐" placeholder-class="journal-placeholder" /></view>
+  </view>
+  <button class="journal-primary journal-action" hover-class="journal-primary--pressed" loading="{{saving}}" disabled="{{saving || choosingImage}}" bindtap="save">{{saving ? '保存中…' : '保存回忆'}}</button>
+  <text class="journal-hint local-note">照片与回忆仅存于本机</text>
 </view>

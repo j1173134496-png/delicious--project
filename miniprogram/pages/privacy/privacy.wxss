@@ -1,7 +1,5 @@
-.privacy-page { padding-top: 12rpx; }
-.privacy-scroll { height: calc(100vh - 96rpx); padding: 0 24rpx 40rpx; box-sizing: border-box; }
 .content-card { margin-top: 24rpx; padding: 30rpx; display: flex; flex-direction: column; }
+.content-card:first-child { margin-top: 0; }
 .section-title { color: var(--color-title); font-size: 30rpx; font-weight: 700; }
 .body-text { color: var(--color-text); font-size: 25rpx; line-height: 1.75; margin-top: 18rpx; }
-.action-hint { display: block; color: var(--color-muted); font-size: 21rpx; line-height: 1.5; text-align: center; margin: 24rpx 24rpx 0; }
-.privacy-scroll > .secondary-button { display: block; width: 80%; margin: 28rpx auto 50rpx; }
+.action-hint { display: block; color: var(--color-muted); font-size: 23rpx; line-height: 1.6; text-align: center; margin: 24rpx 12rpx 0; }

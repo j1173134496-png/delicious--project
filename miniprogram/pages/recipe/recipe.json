@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "情侣菜谱",
-  "usingComponents": { "recipe-card": "/components/recipe-card/recipe-card", "empty-state": "/components/empty-state/empty-state" }
+  "navigationBarBackgroundColor": "#F8E8C5",
+  "backgroundColor": "#F8E8C5",
+  "disableScroll": true,
+  "usingComponents": { "recipe-card": "/components/recipe-card/recipe-card" }
 }

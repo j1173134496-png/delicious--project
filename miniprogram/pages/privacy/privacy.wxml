@@ -1,10 +1,7 @@
-<view class="safe-page privacy-page">
-  <nav-bar title="隐私说明" showBack="{{true}}" />
-  <scroll-view class="privacy-scroll" scroll-y="true">
-    <view class="content-card card"><text class="section-title">数据保存在哪里</text><text class="body-text">昵称、资料、聊天、设置和反馈记录保存在当前设备的本地 Storage。相册和菜谱照片使用当前设备的小程序本地文件路径，列表只保存受管的文件元数据。</text><text class="body-text">邀请分享只携带 6 位邀请码和页面来源，不携带昵称、聊天、照片或原始情绪内容。</text></view>
+<view class="journal-page journal-inset privacy-page">
+    <view class="content-card journal-sheet"><view class="journal-tape" aria-hidden="true"></view><text class="section-title">数据保存在哪里</text><text class="body-text">昵称、资料、聊天、设置和反馈记录保存在当前设备的本地 Storage。相册和菜谱照片使用当前设备的小程序本地文件路径，列表只保存受管的文件元数据。</text><text class="body-text">邀请分享只携带 6 位邀请码和页面来源，不携带昵称、聊天、照片或原始情绪内容。</text></view>
     <view class="content-card card"><text class="section-title">情绪关怀</text><text class="body-text">情绪识别在本地使用 mock 规则，只向伴侣聊天中发送泛化的关怀语句。原始吐槽不会被拼进关怀消息；关闭情绪关怀或通知开关后不会生成这类消息。</text></view>
     <view class="content-card card"><text class="section-title">当前限制</text><text class="body-text">当前没有接入真实 LLM、云同步、远程反馈接口或主动推送。绑定、分享和数据展示均为当前设备模拟，不构成跨设备账号服务。</text></view>
     <view class="content-card card"><text class="section-title">清除本地数据</text><text class="body-text">设置中的清除操作会清理受管的用户、伴侣、猫咪、聊天、菜谱、相册、反馈记录和图片文件元数据。系统文件权限或文件已失效时，页面会提示清理结果；本页面不承诺法律意义上的后端删除。</text></view>
-    <text class="action-hint">如需补充说明，请先在本设备保存反馈，再手动发送给产品方。</text><button class="secondary-button" aria-label="打开隐私反馈" bindtap="goFeedback">反馈隐私疑问</button>
-  </scroll-view>
+    <text class="action-hint">如需补充说明，请先在本设备保存反馈，再手动发送给产品方。</text><button class="secondary-button journal-action" aria-label="打开隐私反馈" bindtap="goFeedback">反馈隐私疑问</button>
 </view>

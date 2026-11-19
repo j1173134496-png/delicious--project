@@ -17,7 +17,7 @@ Page({
     const user = userService.getCurrentUser()
     const couple = userService.getCouple()
     const cat = catService.getCat()
-    const progress = catService.getProgress()
+    const progress = catService.getProgress(cat)
     const isBound = Boolean(couple.partner)
     const formMeta = getFormMeta(cat.currentForm)
     const stateMeta = getStateMeta(cat.stateKey || 'idle')
@@ -41,6 +41,7 @@ Page({
       isBound,
       formEmoji: formAsset.emoji,
       formImage: formAsset.imagePath,
+      formIdleImage: formAsset.idlePath,
       formImageFailed: false,
       formName: formMeta.name,
       stateText: stateMeta.label,
@@ -55,7 +56,15 @@ Page({
       capabilities: getCapabilities()
     })
   },
-  onFormImageError() { this.setData({ formImageFailed: true }) },
+  onFormImageError(event) {
+    const src = event && event.currentTarget && event.currentTarget.dataset.src
+    if (src && src !== this.data.formImage) return
+    if (this.data.formIdleImage && this.data.formImage !== this.data.formIdleImage) {
+      this.setData({ formImage: this.data.formIdleImage, formAssetFallback: 'idle' })
+    } else {
+      this.setData({ formImageFailed: true, formAssetFallback: 'emoji' })
+    }
+  },
   openPage(url, message) {
     if (typeof wx === 'undefined' || !wx.navigateTo) return showToast(message)
     try { wx.navigateTo({ url, fail: () => showToast(message) }) } catch (error) { console.error('[profile] navigation failed', error); showToast(message) }

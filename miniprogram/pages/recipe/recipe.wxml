@@ -1,7 +1,42 @@
-<view class="safe-page recipe-page">
-  <view class="recipe-header"><view><text class="page-title">菜谱图鉴</text><text class="page-subtitle">把一起吃过的美味收藏起来</text></view><text class="recipe-total">已解锁 {{unlockedCount}} 道</text></view>
-  <view class="recipe-tabs card"><view wx:for="{{tabs}}" wx:key="key" class="recipe-tab {{activeTab === item.key ? 'recipe-tab--active' : ''}}" data-tab="{{item.key}}" aria-label="{{item.label}}，{{item.count}} 道，{{activeTab === item.key ? '当前选中' : '切换'}}" bindtap="switchTab"><text>{{item.label}}</text><text class="recipe-tab-count">{{item.count}} 道</text><text class="recipe-tab-state">{{activeTab === item.key ? '当前分类' : '查看'}}</text></view></view>
-  <view class="recipe-grid" wx:if="{{recipes.length}}"><recipe-card wx:for="{{recipes}}" wx:key="recipeId" recipe="{{item}}" bind:select="openDetail" /></view>
-  <empty-state wx:else icon="🍳" text="{{emptyText}}" actionText="{{emptyActionText}}" bind:action="goAdd" />
-  <button class="floating-add" aria-label="新增菜品" bindtap="goAdd">＋ 新增菜品</button>
+<view class="journal-page recipe-page">
+  <view class="recipe-heading">
+    <view class="recipe-heading__copy">
+      <text class="recipe-title">菜谱图鉴</text>
+      <text class="recipe-subtitle">把一起吃过的美味收藏起来</text>
+    </view>
+    <view class="recipe-total">
+      <text class="recipe-total__label">已解锁</text>
+      <text class="recipe-total__count">{{unlockedCount}} <text class="recipe-total__unit">道</text></text>
+    </view>
+  </view>
+
+  <view class="recipe-tabs">
+    <button wx:for="{{tabs}}" wx:key="key" class="recipe-tab {{activeTab === item.key ? 'recipe-tab--active' : ''}}" data-tab="{{item.key}}" aria-label="{{item.label}}，{{item.count}} 道，{{activeTab === item.key ? '当前分类' : '切换'}}" hover-class="recipe-tab--pressed" bindtap="switchTab">
+      <view class="recipe-tab__heading">
+        <view class="recipe-tab__icon recipe-tab__icon--{{item.key}}" aria-hidden="true"></view>
+        <text class="recipe-tab__label">{{item.label}}</text>
+      </view>
+      <text class="recipe-tab-count">{{item.count}} 道</text>
+      <text wx:if="{{activeTab === item.key}}" class="recipe-tab-state">✓ 当前分类</text>
+    </button>
+  </view>
+
+  <scroll-view class="recipe-scroll" scroll-y="true" scroll-into-view="recipe-top-{{activeTab}}">
+    <view id="recipe-top-{{activeTab}}"></view>
+    <view class="recipe-grid" wx:if="{{recipes.length}}">
+      <view class="recipe-cell" wx:for="{{recipes}}" wx:key="recipeId">
+        <recipe-card recipe="{{item}}" bind:select="openDetail" />
+      </view>
+    </view>
+    <view wx:else class="journal-sheet recipe-empty">
+      <view class="journal-tape" aria-hidden="true"></view>
+      <text class="recipe-empty__mark" aria-hidden="true">✦</text>
+      <text class="recipe-empty__title">{{emptyText}}</text>
+      <text class="recipe-empty__hint">{{activeTab === 'unlocked' ? '给菜品添加照片，就能把它收进这里。' : '添加一道菜，把一起吃过的美味记下来。'}}</text>
+    </view>
+  </scroll-view>
+
+  <view class="recipe-dock">
+    <button class="journal-primary recipe-add-button" aria-label="新增菜品" hover-class="journal-primary--pressed" bindtap="goAdd"><text class="recipe-add-button__icon" aria-hidden="true">＋</text>新增菜品</button>
+  </view>
 </view>

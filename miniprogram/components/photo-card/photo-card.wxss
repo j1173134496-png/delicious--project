@@ -1,8 +1,8 @@
-.photo-card { position: relative; height: 230rpx; overflow: hidden; border-radius: 20rpx; background: #F5EDF4; }
+.photo-card { position: relative; box-sizing: border-box; height: 230rpx; overflow: hidden; border: 4rpx solid #fffaeb; border-radius: 14rpx; background: #f5e3c5; box-shadow: 3rpx 4rpx 0 #a88567; }
 .photo-card__image { display: block; width: 100%; height: 100%; }
-.photo-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(150deg, #FFF1F4, #F3E8F7); }
+.photo-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #f1e2ca; color: #725445; }
 .photo-placeholder__icon, .photo-placeholder__caption { font-size: 68rpx; opacity: .7; }
 .photo-placeholder__caption { font-size: 18rpx; }
-.photo-tag { position: absolute; left: 10rpx; bottom: 10rpx; max-width: 80%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; background: rgba(255,255,255,.82); color: var(--color-title); border-radius: 999rpx; padding: 5rpx 12rpx; font-size: 18rpx; }
+.photo-tag { position: absolute; left: 10rpx; bottom: 10rpx; max-width: 41%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; background: #fff5dd; color: #41271d; border-radius: 999rpx; padding: 5rpx 12rpx; font-size: 18rpx; }
 .photo-uploader { position: absolute; right: 10rpx; bottom: 10rpx; max-width: 48%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; background: rgba(57, 34, 53, .72); color: #FFF; border-radius: 999rpx; padding: 5rpx 10rpx; font-size: 17rpx; }
 .photo-action-hint { position: absolute; left: 10rpx; top: 10rpx; color: #FFF; background: rgba(57, 34, 53, .62); border-radius: 999rpx; padding: 4rpx 8rpx; font-size: 16rpx; }

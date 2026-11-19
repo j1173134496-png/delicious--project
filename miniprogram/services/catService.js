@@ -124,8 +124,7 @@ function makeCondition(key, label, current, need) {
   return { key, label, current: value, need: target, remaining, ready: target === 0 || value >= target, percent: target ? Math.round(Math.min(1, value / target) * 100) : 100 }
 }
 
-function getProgress() {
-  const cat = getCat()
+function getProgress(cat = getCat()) {
   const state = resolveCatState(cat)
   const experience = getExperienceProgress(cat.exp)
   const currentMeta = getFormMeta(cat.currentForm)

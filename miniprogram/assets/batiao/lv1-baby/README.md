@@ -1,1 +1,3 @@
-已接入 `idle.png` 作为小奶猫基础素材；当前没有 `happy.png`、`eating.png`、`sad.png` 专用状态图，互动状态继续使用 CSS 动画并回退到 idle 图。
+Lv.1 小奶猫素材以 `docs/new/1.jpg` 的白猫坐姿为基准。
+
+`idle.png`、`happy.png`、`eating.png`、`sad.png` 和 `sleeping.png` 为 336 × 336 透明状态图，统一脚底基线。`avatar.png` 为 112 × 112 聊天头像。状态图加载失败时优先使用本形态 `idle.png`，再回退到 Emoji。

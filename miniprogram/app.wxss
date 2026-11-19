@@ -1,6 +1,7 @@
 @import './styles/variables.wxss';
 @import './styles/mixins.wxss';
 @import './styles/animation.wxss';
+@import './styles/journal.wxss';
 
 page {
   background: var(--color-bg);
@@ -26,13 +27,15 @@ input, textarea { font-family: inherit; }
 
 .page-title { font-size: 44rpx; font-weight: 700; color: var(--color-title); }
 .page-subtitle { color: var(--color-muted); font-size: 24rpx; margin-top: 8rpx; }
-.card { background: var(--color-card); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
-.primary-button { background: var(--color-primary); color: #fff; border-radius: 999rpx; font-size: 28rpx; font-weight: 600; padding: 20rpx 30rpx; }
-.secondary-button { background: var(--color-lavender); color: var(--color-title); border-radius: 999rpx; font-size: 26rpx; padding: 18rpx 26rpx; }
-.ghost-button { color: var(--color-primary-dark); background: transparent; font-size: 26rpx; padding: 12rpx 20rpx; }
+.card { background: var(--color-card); border: 2rpx solid var(--journal-outline); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
+.primary-button { background: var(--color-primary); color: #fffaf3; border: 2rpx solid #743533; border-radius: 999rpx; font-size: 28rpx; font-weight: 700; padding: 17rpx 25rpx; }
+.secondary-button { background: var(--color-lavender); color: var(--color-title); border: 2rpx solid #92779e; border-radius: 999rpx; font-size: 26rpx; padding: 14rpx 23rpx; }
+.ghost-button { color: var(--color-primary-dark); background: transparent; font-size: 25rpx; padding: 12rpx 18rpx; }
+.primary-button[disabled], .secondary-button[disabled], .ghost-button[disabled] { background: #efe0ce; color: var(--journal-muted); border-color: #b89c86; }
+.capability-hint { display: block; margin: 16rpx 0; color: var(--journal-muted); font-size: 23rpx; line-height: 1.5; }
 .muted { color: var(--color-muted); }
 .empty-state { padding: 80rpx 30rpx; text-align: center; color: var(--color-muted); }
 .empty-state__icon { font-size: 72rpx; display: block; margin-bottom: 20rpx; }
 .row { display: flex; align-items: center; }
 .space-between { justify-content: space-between; }
-.divider { height: 1rpx; background: #F2E7ED; margin: 24rpx 0; }
+.divider { height: 1rpx; background: #dbc5a7; margin: 24rpx 0; }

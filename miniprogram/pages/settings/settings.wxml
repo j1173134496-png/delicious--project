@@ -1,5 +1,5 @@
-<view class="safe-page settings-page">
-  <nav-bar title="设置与隐私" showBack="{{true}}" />
+<view class="journal-page journal-inset settings-page">
+  <view class="settings-heading"><text class="journal-title">偏好设置</text><text class="journal-hint">仅在此设备生效</text></view>
   <view class="settings-group card">
     <view class="setting-row"><view><text class="setting-title">情绪关怀提醒</text><text class="setting-desc">检测到倾诉时，只向 Ta 发送泛化关怀</text><text class="setting-state">{{settings.emotionCareEnabled ? '已开启' : '已关闭'}}</text></view><switch aria-label="情绪关怀提醒，{{settings.emotionCareEnabled ? '已开启' : '已关闭'}}" color="#FF9FB2" checked="{{settings.emotionCareEnabled}}" bindchange="onEmotionChange" /></view>
     <view class="setting-row"><view><text class="setting-title">通知提醒</text><text class="setting-desc">允许八条在本地显示温柔提示</text><text class="setting-state">{{settings.notificationsEnabled ? '已开启' : '已关闭'}}</text></view><switch aria-label="通知提醒，{{settings.notificationsEnabled ? '已开启' : '已关闭'}}" color="#FF9FB2" checked="{{settings.notificationsEnabled}}" bindchange="onNotificationChange" /></view>
@@ -9,7 +9,7 @@
     <view class="setting-link" aria-label="打开隐私说明" bindtap="showPrivacy"><text>隐私说明</text><text>›</text></view>
     <view class="setting-link" aria-label="打开意见反馈" bindtap="feedback"><text>意见反馈</text><text>›</text></view>
   </view>
-  <view class="danger-card card"><button class="danger-button" aria-label="清除当前设备的本地数据" loading="{{clearing}}" disabled="{{clearing}}" bindtap="clearData">清除本地数据</button><text>仅清理当前设备，会恢复默认资料、聊天、菜谱、照片和反馈记录。</text><text wx:if="{{clearError}}" class="clear-error">{{clearError}} 再次点击即可重试。</text></view>
+  <view class="danger-card card"><text class="danger-label">本机数据</text><text>清除后会恢复默认资料，并清理本机聊天、菜谱、照片和反馈记录。</text><button class="danger-button" aria-label="清除当前设备的本地数据" loading="{{clearing}}" disabled="{{clearing}}" bindtap="clearData">清除本地数据</button><text wx:if="{{clearError}}" class="clear-error">{{clearError}} 再次点击即可重试。</text></view>
   <text class="version">八条与你 MVP · v{{version}} · {{localModeName}}</text>
   <text class="hint capability-hint" wx:if="{{!capabilities.storage}}">当前环境没有可用本地存储，部分记录功能需要稍后重试。</text>
 </view>

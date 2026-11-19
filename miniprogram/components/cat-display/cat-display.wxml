@@ -1,9 +1,4 @@
-<view class="cat-display {{stateClass}} {{reducedMotion ? 'cat-display--reduced' : ''}}" aria-label="{{formName}}，当前{{stateText}}，点击或长按摸摸" bindtap="onPet" bindlongpress="onPet">
-  <view class="cat-sparkle sparkle-a">✦</view><view class="cat-sparkle sparkle-b">·</view>
-  <view class="cat-depth-shadow" aria-hidden="true"></view>
-  <view class="cat-face {{hasImage ? 'cat-face--with-image' : ''}}"><view class="cat-highlight" aria-hidden="true"></view><image wx:if="{{hasImage}}" class="cat-image" src="{{imagePath}}" mode="aspectFit" binderror="onImageError" /><text wx:else class="cat-emoji">{{emoji}}</text><text class="cat-bow" wx:if="{{!hasImage && cat.level >= 2}}">🎀</text></view>
-  <text class="cat-name">{{cat.name || '八条'}}</text>
-  <text class="cat-form" aria-live="polite">{{formName}} · 当前状态：{{stateText}}</text>
-  <text class="cat-interaction-hint">点击或长按猫咪摸摸；同一次长按后的重复点击会被抑制</text>
-  <text wx:if="{{assetFallback === 'idle' || assetFallback === 'emoji'}}" class="cat-asset-hint">状态图片缺少时使用 idle 素材；加载失败显示 Emoji 占位：{{fallbackText}}</text>
+<view class="cat-display {{stateClass}} {{reducedMotion ? 'cat-display--reduced' : ''}}" aria-label="{{formName}}，当前状态：{{stateText}}，点击或长按摸摸{{assetFallback === 'emoji' ? '，显示 Emoji 占位' : ''}}" bindtap="onPet" bindlongpress="onPet">
+  <view class="cat-face {{hasImage ? 'cat-face--with-image' : ''}}"><image wx:if="{{hasImage}}" class="cat-image" src="{{imagePath}}" data-src="{{imagePath}}" mode="aspectFit" binderror="onImageError" /><text wx:else class="cat-emoji">{{emoji}}</text><text class="cat-bow" wx:if="{{!hasImage && cat.level >= 2}}">🎀</text></view>
+  <text wx:if="{{stateClass !== 'cat-display--idle'}}" class="cat-form" aria-live="polite">{{stateText}}</text>
 </view>

@@ -68,6 +68,7 @@ async function main() {
   const busy = appDefinition.retryInitialization.call(appDefinition)
   appDefinition.globalData.initializing = false
   check(!busy.ok && busy.code === 'initialization_in_progress', 'duplicate retry is rejected while initialization is active')
+  page.onUnload()
   delete global.getApp
   console.log('SMOKE_RECOVERY=PASS')
   console.log(`RECOVERY_ASSERTIONS=${assertions}`)

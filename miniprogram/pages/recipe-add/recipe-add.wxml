@@ -1,11 +1,53 @@
-<view class="safe-page add-page">
-  <nav-bar title="{{isEdit ? '编辑菜品' : '添加新菜'}}" showBack="{{true}}" />
-  <view class="form-card card">
-    <view class="form-row"><text class="form-label">菜名</text><input class="form-input" maxlength="30" value="{{form.name}}" bindinput="onNameInput" placeholder="例如：周末一起做的炒饭" /></view>
-    <view class="form-row"><text class="form-label">分类</text><picker mode="selector" range="{{categoryOptions}}" value="{{categoryIndex}}" bindchange="onCategoryChange"><view class="picker-value">{{categoryOptions[categoryIndex]}} <text>⌄</text></view></picker></view>
-    <view class="form-column"><text class="form-label">给它打分</text><text class="rating-readable">当前评分 {{form.rating || 0}} / 5</text><view class="rating-picker"><text wx:for="{{ratingValues}}" wx:key="*this" data-rating="{{item}}" aria-label="评分 {{item}} / 5" bindtap="pickRating">{{item <= form.rating ? '♥' : '♡'}}</text></view></view>
-    <view class="form-column"><text class="form-label">评价 / 备注</text><textarea class="form-textarea" maxlength="300" value="{{form.review}}" bindinput="onReviewInput" placeholder="记下当时的味道和心情吧" /></view>
+<view class="journal-page add-page">
+  <view class="journal-sheet recipe-form">
+    <view class="journal-tape" aria-hidden="true"></view>
+    <view class="form-row">
+      <text class="form-label">菜名</text>
+      <input class="form-input" aria-label="菜名，必填" maxlength="30" value="{{form.name}}" bindinput="onNameInput" placeholder="例如：周末一起做的炒饭" placeholder-class="form-placeholder" />
+    </view>
+    <view class="form-row">
+      <text class="form-label">分类</text>
+      <picker class="form-category" aria-label="菜品分类，当前为{{categoryOptions[categoryIndex]}}" mode="selector" range="{{categoryOptions}}" value="{{categoryIndex}}" bindchange="onCategoryChange">
+        <view class="journal-chip picker-value">{{categoryOptions[categoryIndex]}}<text class="picker-arrow" aria-hidden="true">▾</text></view>
+      </picker>
+    </view>
+    <view class="form-section rating-section">
+      <view class="form-heading">
+        <text class="form-label">给它打分</text>
+        <text class="rating-readable">当前评分 <text class="rating-count">{{form.rating || 0}} / 5</text></text>
+      </view>
+      <view class="rating-picker">
+        <button wx:for="{{ratingValues}}" wx:key="*this" class="rating-heart {{item <= form.rating ? 'rating-heart--selected' : ''}}" data-rating="{{item}}" aria-label="评分 {{item}} / 5{{item <= form.rating ? '，已选' : '，未选'}}" hover-class="rating-heart--pressed" bindtap="pickRating">{{item <= form.rating ? '♥' : '♡'}}</button>
+      </view>
+    </view>
+    <view class="form-section review-section">
+      <text class="form-label">评价 / 备注</text>
+      <textarea class="form-textarea" aria-label="评价或备注，选填" maxlength="300" value="{{form.review}}" bindinput="onReviewInput" placeholder="记下当时的味道和心情吧～" placeholder-class="form-placeholder" />
+    </view>
   </view>
-  <view class="photo-picker card"><view class="photo-picker-head"><text class="form-label">照片</text><text class="photo-count">{{photos.length}} / 9（最多 9 张）</text></view><view class="photo-grid"><view wx:for="{{photoItems}}" wx:key="path" class="photo-item"><image wx:if="{{item.hasImage}}" src="{{item.imagePath}}" mode="aspectFill" binderror="onPhotoError" data-index="{{index}}" /><view wx:else class="photo-placeholder">📷<text>照片占位</text></view></view><view class="photo-add" aria-label="添加照片" bindtap="choosePhoto">＋ 添加照片</view></view><text class="photo-hint">可以先保存菜名，之后再补照片解锁。</text><text class="hint capability-hint" wx:if="{{!capabilities.chooseImage}}">当前环境不能选图，仍可先保存菜名和备注。</text></view>
-  <button class="primary-button save-button" loading="{{saving}}" disabled="{{saving}}" bindtap="save">保存菜品</button>
+
+  <view class="journal-sheet photo-picker">
+    <view class="form-heading">
+      <text class="form-label">照片</text>
+      <text class="photo-count">{{photos.length}} / 9 张</text>
+    </view>
+    <view class="photo-grid">
+      <view class="photo-item" wx:for="{{photoItems}}" wx:key="path">
+        <image wx:if="{{item.hasImage}}" class="photo-thumb" src="{{item.imagePath}}" alt="菜品照片 {{index + 1}}" mode="aspectFill" binderror="onPhotoError" data-index="{{index}}" />
+        <view wx:else class="photo-placeholder"><view class="photo-camera" aria-hidden="true"></view><text>照片占位</text></view>
+      </view>
+      <button wx:if="{{photos.length < 9}}" class="photo-add" aria-label="添加照片，单个菜品最多 9 张" disabled="{{choosingPhoto || saving || !capabilities.chooseImage}}" hover-class="photo-add--pressed" bindtap="choosePhoto">
+        <view class="photo-camera photo-camera--add" aria-hidden="true">＋</view>
+        <text class="photo-add__label">{{choosingPhoto ? '选图中…' : '添加照片'}}</text>
+      </button>
+      <view wx:if="{{!photos.length}}" class="photo-note">
+        <text class="photo-note__spark" aria-hidden="true">✦</text>
+        <text class="photo-note__copy">给这道菜留张照片吧～</text>
+      </view>
+    </view>
+    <text class="photo-hint">{{photos.length >= 9 ? '已添加 9 张，达到单个菜品上限。' : photos.length ? '选中的照片会在保存时写入本机。' : '可以先保存菜品，之后再补照片解锁。'}}</text>
+    <text class="photo-capability" wx:if="{{!capabilities.chooseImage}}">当前环境不能选图，仍可先保存菜名和备注。</text>
+  </view>
+
+  <button class="journal-primary save-button" aria-label="{{saving ? '正在保存菜品' : '保存菜品'}}" loading="{{saving}}" disabled="{{saving || choosingPhoto}}" hover-class="journal-primary--pressed" bindtap="save">{{saving ? '保存中…' : '保存菜品'}}</button>
 </view>

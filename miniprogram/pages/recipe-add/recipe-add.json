@@ -1,4 +1,5 @@
 {
-  "navigationBarTitleText": "添加菜品",
-  "usingComponents": { "nav-bar": "/components/nav-bar/nav-bar" }
+  "navigationBarTitleText": "添加新菜",
+  "navigationBarBackgroundColor": "#F8E8C5",
+  "backgroundColor": "#F8E8C5"
 }

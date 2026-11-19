@@ -16,17 +16,17 @@
   ],
   "window": {
     "navigationBarTitleText": "八条与你",
-    "navigationBarBackgroundColor": "#FFF5F5",
+    "navigationBarBackgroundColor": "#F8E8C5",
     "navigationBarTextStyle": "black",
-    "backgroundColor": "#FFF5F5",
+    "backgroundColor": "#F8E8C5",
     "backgroundTextStyle": "light",
     "enablePullDownRefresh": false,
     "onReachBottomDistance": 80
   },
   "tabBar": {
-    "color": "#9A829D",
-    "selectedColor": "#E86F91",
-    "backgroundColor": "#FFFFFF",
+    "color": "#725445",
+    "selectedColor": "#A8383D",
+    "backgroundColor": "#FFFAEB",
     "borderStyle": "white",
     "list": [
       { "pagePath": "pages/chat/chat", "text": "八条", "iconPath": "assets/tabbar/cat.png", "selectedIconPath": "assets/tabbar/cat-active.png" },

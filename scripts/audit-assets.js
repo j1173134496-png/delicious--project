@@ -61,16 +61,25 @@ function normalizeReference(reference) {
 function collectReferences() {
   const references = new Set()
   const catReferences = new Set()
-  const catModelPath = path.join(MINI, 'models/cat.js')
-  const catModel = fs.existsSync(catModelPath) ? fs.readFileSync(catModelPath, 'utf8') : ''
-  const imageMatches = Array.from(catModel.matchAll(/imagePath\s*:\s*['"]([^'"]+)['"]/g)).map((match) => match[1])
-  if (imageMatches.length !== 4) fail(`FORM_META must expose exactly 4 imagePath entries, found ${imageMatches.length}`)
-  imageMatches.forEach((reference) => {
+  const { CAT_STATES, FORM_META, getFormAsset } = require(path.join(MINI, 'models/cat.js'))
+  const forms = Object.values(FORM_META)
+  if (forms.length !== 4 || new Set(forms.map((form) => form.imagePath)).size !== 4) fail('FORM_META must expose four unique default sprites')
+  const register = (reference) => {
     const normalized = normalizeReference(reference)
-    if (!normalized.startsWith(CAT_PREFIX)) fail(`FORM_META path must use /assets root: ${reference}`)
+    if (!reference || !reference.startsWith(`/${CAT_PREFIX}`) || !/^assets\/batiao\/[\w-]+\/[\w-]+\.png$/.test(normalized)) fail(`invalid FORM_META asset path: ${reference}`)
     references.add(normalized)
     catReferences.add(normalized)
+  }
+  forms.forEach((form) => {
+    register(form.imagePath)
+    Object.keys(CAT_STATES).forEach((state) => {
+      const asset = getFormAsset(form.key, state)
+      if (form.key === 'baby' && !asset.hasDedicatedAsset) fail(`Lv.1 is missing its ${state} asset`)
+      register(asset.imagePath)
+    })
+    if (form.avatarPath) register(form.avatarPath)
   })
+  if (!FORM_META.baby.avatarPath) fail('Lv.1 must expose a chat avatar')
 
   const app = readJson(path.join(MINI, 'app.json'))
   const tabbar = app && app.tabBar && Array.isArray(app.tabBar.list) ? app.tabBar.list : []
@@ -133,11 +142,9 @@ function main() {
       catTotal += parsed.bytes
       if (parsed.bytes > MAX_CAT_BYTES) fail(`${relative} exceeds ${MAX_CAT_BYTES} byte per-form budget`)
       if (Math.max(parsed.width, parsed.height) > MAX_CAT_DIMENSION) fail(`${relative} exceeds ${MAX_CAT_DIMENSION}px long-edge budget (${parsed.width}x${parsed.height})`)
-      if (!relative.endsWith('/idle.png')) warn(`${relative} is a non-idle state asset; state fallback remains supported`)
     }
   })
 
-  if (catReferences.size !== 4) fail(`expected four unique FORM_META cat assets, found ${catReferences.size}`)
   catReferences.forEach((relative) => {
     if (!fs.existsSync(path.join(MINI, relative))) fail(`FORM_META references missing ${relative}`)
   })

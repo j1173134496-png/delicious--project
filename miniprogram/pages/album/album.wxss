@@ -1,26 +1,38 @@
-.album-page { padding: 24rpx 24rpx 150rpx; padding-bottom: calc(150rpx + env(safe-area-inset-bottom)); }
-.album-hero { padding: 28rpx; text-align: center; }
-.album-couple { display: flex; align-items: center; justify-content: center; color: var(--color-primary-dark); font-size: 34rpx; }
-.album-couple > avatar + text, .album-couple > text + avatar { margin-left: 24rpx; }
-.together { display: block; margin-top: 18rpx; color: var(--color-title); font-size: 27rpx; }
-.together text { color: var(--color-primary-dark); font-size: 38rpx; font-weight: 700; }
-.together--empty { color: var(--color-muted); font-size: 23rpx; }
-.bind-album-button { margin: 14rpx auto 0; font-size: 22rpx; }
-.album-summary { display: flex; justify-content: space-between; margin-top: 24rpx; padding-top: 18rpx; border-top: 1rpx solid #F5EDF2; color: var(--color-muted); font-size: 22rpx; }
-.album-summary > .signature, .album-summary > .signature-editor { margin-left: 18rpx; }
-.signature { color: var(--color-title); max-width: 58%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.signature-editor { max-width: 62%; display: flex; flex-direction: column; align-items: flex-end; }
-.signature-editor input { width: 100%; background: #FFF8FB; border-radius: 12rpx; padding: 10rpx 14rpx; box-sizing: border-box; color: var(--color-text); font-size: 22rpx; }
-.signature-editor view { display: flex; margin-top: 8rpx; }
-.signature-editor button + button { margin-left: 8rpx; }
+.album-hero { padding-top: 33rpx; text-align: center; }
+.album-tape--right { left: auto; right: 13rpx; transform: rotate(16deg); }
+.album-couple { display: flex; align-items: center; justify-content: center; color: var(--journal-coral); }
+.album-heart { margin: 0 28rpx; font-size: 43rpx; }
+.album-heart::before, .album-heart::after { content: '···'; color: #a16f62; font-size: 30rpx; margin: 0 10rpx; }
+.together { display: block; margin-top: 17rpx; color: var(--journal-ink); font-size: 28rpx; font-weight: 600; }
+.album-days { color: var(--journal-coral); font-size: 37rpx; font-weight: 800; }
+.bind-album-button { display: inline-flex; margin: 14rpx auto 0; }
+.album-summary { display: flex; align-items: flex-start; justify-content: space-between; margin-top: 22rpx; padding-top: 18rpx; border-top: 2rpx dashed var(--journal-stitch); }
+.album-total { flex: none; padding: 8rpx 12rpx; background: #f7e6be; border: 2rpx solid #b58b64; border-radius: 8rpx; color: var(--journal-muted); font-size: 22rpx; }
+.signature-editor { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-end; margin-left: 17rpx; }
+.signature { width: 100%; color: var(--journal-ink); font-size: 24rpx; line-height: 1.45; overflow-wrap: break-word; text-align: right; }
+.signature-input { width: 100%; min-height: 65rpx; padding: 8rpx 12rpx; font-size: 24rpx; }
+.signature-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; margin-top: 8rpx; }
+.signature-actions > .journal-compact, .signature-action { min-height: 56rpx; padding: 8rpx 11rpx; font-size: 22rpx; }
+.album-empty { text-align: center; padding: 9rpx 0 18rpx; }
+.album-empty-hint { margin: 12rpx 0 21rpx; }
+.album-illustration { position: relative; width: 460rpx; max-width: 100%; height: 249rpx; margin: 0 auto 14rpx; }
+.memory-print { position: absolute; width: 150rpx; height: 171rpx; padding: 12rpx; background: #fffaf0; border: 3rpx solid var(--journal-outline); border-radius: 9rpx; box-shadow: 4rpx 7rpx 0 #b9946866; }
+.memory-print--left { top: 38rpx; left: 45rpx; transform: rotate(-18deg); }
+.memory-print--right { top: 30rpx; right: 44rpx; transform: rotate(15deg); }
+.memory-print--front { z-index: 2; width: 166rpx; height: 185rpx; top: 44rpx; left: 50%; transform: translateX(-50%) rotate(-5deg); }
+.print-art { display: flex; justify-content: center; align-items: center; height: 82%; background: #f1cc9d; border: 2rpx solid #ad876c; border-radius: 5rpx; }
+.print-art--pale { background: #ead9f4; }
+.print-art--green { background: #d6e2c9; }
+.album-spark { position: absolute; font-size: 36rpx; font-weight: 800; color: var(--journal-coral); }
+.album-spark--left { top: 10rpx; left: 18rpx; color: #a46a33; }
+.album-spark--right { top: 1rpx; right: 19rpx; }
 .month-section { margin-top: 28rpx; }
 .month-title { display: flex; align-items: baseline; justify-content: space-between; margin: 0 8rpx 16rpx; color: var(--color-title); }
 .month-title text:first-child { font-weight: 700; font-size: 29rpx; }
-.month-title text:last-child { color: var(--color-muted); font-size: 21rpx; }
+.month-count { color: var(--journal-muted); font-size: 23rpx; }
 .photo-grid { display: flex; flex-wrap: wrap; }
-.photo-grid photo-card { width: calc(33.333% - 10rpx); }
-.photo-grid photo-card:nth-child(3n + 2), .photo-grid photo-card:nth-child(3n) { margin-left: 14rpx; }
-.floating-add { position: fixed; z-index: 10; right: 30rpx; bottom: 140rpx; bottom: calc(140rpx + env(safe-area-inset-bottom)); min-width: 104rpx; width: auto; padding: 0 22rpx; height: 104rpx; border-radius: 52rpx; color: #fff; background: var(--color-primary-dark); box-shadow: 0 10rpx 24rpx rgba(232, 111, 145, .3); font-size: 28rpx; line-height: 96rpx; }
+.album-photo-cell { width: 50%; min-width: 0; padding: 0 8rpx 16rpx 0; }
+.album-photo-cell:nth-child(even) { padding-left: 8rpx; padding-right: 0; }
 .preview-overlay { position: fixed; z-index: 20; top: 0; right: 0; bottom: 0; left: 0; background: rgba(38, 25, 42, .96); color: #fff; display: flex; flex-direction: column; padding-bottom: 0; padding-bottom: env(safe-area-inset-bottom); }
 .preview-top { height: 110rpx; padding: 30rpx; display: flex; align-items: center; justify-content: space-between; font-size: 26rpx; }
 .preview-close { margin: 0; padding: 0; color: #fff; background: transparent; font-size: 25rpx; line-height: 1; }
@@ -28,7 +40,7 @@
 .preview-swiper image { width: 100%; height: 100%; }
 .preview-placeholder { height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; font-size: 140rpx; }
 .preview-placeholder text { color: #C8B4C4; font-size: 22rpx; }
-.preview-caption { min-height: 150rpx; padding: 22rpx 30rpx 30rpx; display: flex; flex-direction: column; color: #FBEAF1; font-size: 23rpx; }
+.preview-caption { flex: none; max-height: 46%; overflow-y: auto; overflow-wrap: break-word; padding: 22rpx 30rpx 30rpx; display: flex; flex-direction: column; color: #fff5e5; font-size: 25rpx; }
 .preview-caption > text + text { margin-top: 8rpx; }
 .preview-caption > button { margin-top: 8rpx; }
 .preview-caption text:last-of-type { color: #C8B4C4; font-size: 20rpx; }

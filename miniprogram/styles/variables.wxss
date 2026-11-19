@@ -1,16 +1,16 @@
 page {
-  --color-primary: #FF9FB2;
-  --color-primary-dark: #E86F91;
-  --color-bg: #FFF5F5;
-  --color-card: #FFFFFF;
-  --color-lavender: #E8D5F5;
-  --color-yellow: #FFF3B0;
-  --color-mint: #B5EAD7;
-  --color-text: #5C445E;
-  --color-title: #4B3550;
-  --color-muted: #A58AA4;
-  --color-danger: #D85C70;
-  --shadow-card: 0 12rpx 32rpx rgba(164, 104, 137, .10);
+  --color-primary: #A8383D;
+  --color-primary-dark: #922D33;
+  --color-bg: #F8E8C5;
+  --color-card: #FFFAEB;
+  --color-lavender: #EAD9F4;
+  --color-yellow: #F7D588;
+  --color-mint: #D8E7D1;
+  --color-text: #41271D;
+  --color-title: #41271D;
+  --color-muted: #725445;
+  --color-danger: #922D33;
+  --shadow-card: 4rpx 6rpx 0 rgba(112, 77, 60, .16);
   --radius-lg: 30rpx;
   --radius-md: 20rpx;
 }
